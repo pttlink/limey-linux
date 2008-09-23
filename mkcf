@@ -1,0 +1,47 @@
+#!/bin/bash
+SYSLINUXPATH=./syslinux
+RAWDEV=${CFDEVICE}
+FIRSTPART=${RAWDEV}1
+RECSIZE=512
+PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin
+if [ -z $CFDEVICE ]
+then
+    echo "No compact flash device specified, aborting"
+    exit 1;
+fi
+dd if=/dev/zero of=$RAWDEV bs=$RECSIZE count=1000 || exit 1
+fdisk $RAWDEV <<EOF
+n
+p
+1
+
+
+t
+6
+a
+1
+w
+EOF
+echo "Partitions created"
+sync
+sleep 2 
+mkfs.msdos $FIRSTPART || exit 1
+echo "Filesystem created"
+dd if=$SYSLINUXPATH/mbr.bin of=$RAWDEV bs=512 count=1 || exit 1
+sync
+echo "Boot sector copied"
+$SYSLINUXPATH/syslinux -s $FIRSTPART
+sync
+echo "Syslinux installed"
+mount -t msdos $FIRSTPART mnt || exit 1
+cp syslinux-512.cfg mnt/syslinux.cfg 
+cp kernel.bzi mnt/kernel.bzi
+cp ramdisk.img mnt/ramdisk.img
+cp syscfg.tgz mnt/syscfg.tgz
+cp kdev.tgz mnt/kdev.tgz
+touch mnt/firsttim
+sync
+echo "Kernel and root FS copied"
+umount mnt
+echo "CF initialized with one MS-DOS partition"
+exit 0
