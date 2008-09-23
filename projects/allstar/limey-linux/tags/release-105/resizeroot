@@ -1,0 +1,19 @@
+#/bin/bash
+losetup /dev/loop0 prist_root_fs_${PROCESSOR}
+mount /dev/loop0 mnt
+rm -rf rootfs
+mkdir rootfs
+cp -a mnt/* rootfs
+umount mnt
+losetup -d /dev/loop0
+dd if=/dev/zero of=root_fs_${PROCESSOR} bs=1K count=$1
+losetup /dev/loop1 root_fs_${PROCESSOR}
+mke2fs /dev/loop1 $1
+tune2fs -c0 -r0 /dev/loop1
+mount /dev/loop1 mnt
+cp -a rootfs/* mnt
+umount mnt
+losetup -d /dev/loop1
+rm -rf rootfs
+
+
