@@ -7,7 +7,7 @@ MOBO?=VIA		# for VIA Mini-itx M6000, ME6000, SP8000, or CN10000
 
 # Do not mess with anything down here unless you know what you are doing!
 
-VERSION:=1.0.5			# Limey linux version
+VERSION:=1.0.6			# Limey linux version
 KERNELVERSION:=2.6.23.16	# Linux Kernel version
 BUILDDIR:=$(shell /bin/pwd)	# absolute path to build directory
 
