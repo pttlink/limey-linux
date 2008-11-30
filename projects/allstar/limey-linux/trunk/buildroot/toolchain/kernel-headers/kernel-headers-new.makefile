@@ -1,14 +1,14 @@
 #############################################################
 #
-# full kernel tarballs >= 2.6.23.16
+# full kernel tarballs >= 2.6.27.7
 #
 #############################################################
 
-ifeq ("$(DEFAULT_KERNEL_HEADERS)","2.6.23.16")
+ifeq ("$(DEFAULT_KERNEL_HEADERS)","2.6.27.7")
 VERSION:=2
 PATCHLEVEL:=6
-SUBLEVEL:=23
-EXTRAVERSION:=.16
+SUBLEVEL:=27
+EXTRAVERSION:=.7
 LOCALVERSION:=
 LINUX_HEADERS_VERSION:=$(VERSION).$(PATCHLEVEL).$(SUBLEVEL)$(EXTRAVERSION)
 LINUX_HEADERS_SITE:=http://www.kernel.org/pub/linux/kernel/v2.6/
