@@ -1,0 +1,34 @@
+
+Limey Linux is a small linux distribution designed to fit on a 128MB or larger compact flash card. The
+distribution is optimized to run on VIA Mini-itx motherboards with 512MB of RAM, and was originally
+designed to run the Asterisk PBX for our Amatuer Radio repeater linking project app_rpt. There are
+probably other uses for this distribution so I decided to make it available at the website
+limeylinux.org.
+
+Limey Linux is based on the buildroot build system which is maintained by Erik Andersen at
+http://buildroot.busybox.net. I created a Makefile which calls Erik's buildroot Makefile,
+downloads and builds a Linux Kernel, downloads and builds Syslinux, and sizes the root file system
+for a 256MB ramdisk. The Makefile and helper scripts are also capable of initializing compact
+flash devices from 128MB to 1GB in size.
+
+The packages used to build this distribution are listed in the PACKAGES file 
+
+To build this distribution, you will need to have a gnu-based Linux development system, high speed 
+internet access, root access, disk partitioning and filesystem tools, sudo,
+loopback filesystem support, and at least 2.5GB of free disk space. Once the tarball
+is downloaded and extracted into a directory,
+edit the Makefile to specify the raw device name of your CF reader/writer then:
+
+make setup
+
+make allbins
+
+make ramdisk.img
+
+make cf (insert a CF in your reader before running this command)
+
+make allbins will take from 1-10 hours to complete depending upon the speed of your computer.
+
+
+Steve Rodgers <hwstar@rodgers.sdcoxmail.com>
+
