@@ -1,14 +1,15 @@
 #
 # Makefile for limey linux
 #
-CFDEVICE?=/dev/sde	# Important! Change this to your raw cf device node
-MOBO?=VIA		# for VIA Mini-itx M6000, ME6000, SP8000, or CN10000
+CFDEVICE?=/dev/sda	# Important! Change this to your raw cf device node
+#MOBO?=VIA		# for VIA Mini-itx M6000, ME6000, SP8000, or CN10000
 #MOBO?=D201GLY2		# for Intel/Jetway D201GLY-2 motherboard
+MOBO=D945GCLF		# for Intel Atom D945GCLF
 
 # Do not mess with anything down here unless you know what you are doing!
 
-VERSION:=1.0.6			# Limey linux version
-KERNELVERSION:=2.6.23.16	# Linux Kernel version
+VERSION:=1.0.7			# Limey linux version
+KERNELVERSION:=2.6.27.7		# Linux Kernel version
 BUILDDIR:=$(shell /bin/pwd)	# absolute path to build directory
 
 LLVERS:=$(strip $(VERSION))
@@ -20,17 +21,25 @@ ifeq "$(MB)" "VIA"
 LINUX_ARCH:=i386
 PROCESSOR:=i586
 KERNEL_CONFIG_FILE:=via-kernel.config
-BUILDROOT_CONFIG_FILE:=via-buildroot.config
-UCLIBC_CONFIG_FILE:=via-uclibc.config
+BUILDROOT_CONFIG_FILE:=i586-buildroot.config
+UCLIBC_CONFIG_FILE:=i586-uclibc.config
 else
 ifeq "$(MB)" "D201GLY2"
 LINUX_ARCH:=i386
 PROCESSOR:=i686
 KERNEL_CONFIG_FILE:=d201gly2-kernel.config
-BUILDROOT_CONFIG_FILE:=d201gly2-buildroot.config
-UCLIBC_CONFIG_FILE:=d201gly2-uclibc.config
+BUILDROOT_CONFIG_FILE:=i686-buildroot.config
+UCLIBC_CONFIG_FILE:=i686-uclibc.config
+else
+ifeq "$(MB)" "D945GCLF"
+LINUX_ARCH:=i386
+PROCESSOR:=i686
+KERNEL_CONFIG_FILE:=d945gclf-kernel.config
+BUILDROOT_CONFIG_FILE:=i686-buildroot.config
+UCLIBC_CONFIG_FILE:=i686-uclibc.config
 else
 $(error "Unknown or unspecified motherboard: $(MOBO)")
+endif
 endif
 endif
 
@@ -87,8 +96,6 @@ buildstate/linux_unpacked:	buildstate/linux_downloaded
 	ln -s $(LINUX_VERSION) linux
 
 buildstate/linux_patched: buildstate/linux_unpacked
-	cp -f kernel-patches/coretemp.c linux/drivers/hwmon # update coretrmp.c to support cpu type 16
-	cp -f kernel-patches/airprime.c linux/drivers/usb/serial # update airprime.c to support cellular data service 
 	touch buildstate/linux_patched	
 
 
