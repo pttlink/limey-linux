@@ -526,8 +526,8 @@ loop:
 		free(full_name);
 	}
 	fclose(table);
-
-	system("/bin/sync");
+	sync();
+	/* system("/bin/sync"); */
 
 	return 0;
 }
