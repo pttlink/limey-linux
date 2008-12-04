@@ -159,8 +159,10 @@ if [ -z "$COMPILER" ] ; then
 	exit 1;
 fi;
 
-COMPILER_VERSION=$($COMPILER --version 2>&1 | head -n1 | $XSED -e 's/^.*(.CC) \([0-9\.]\)/\1/g' -e "s/[-\ ].*//g")
+#COMPILER_VERSION=$($COMPILER --version 2>&1 | head -n1 | $XSED -e 's/^.*(.CC) \([0-9\.]\)/\1/g' -e "s/[-\ ].*//g")
+COMPILER_VERSION=$($COMPILER -dumpversion)
 if [ -z "$COMPILER_VERSION" ] ; then
+
 	echo "gcc installed:		    FALSE"
 	/bin/echo -e "\n\nYou must install 'gcc' on your build machine\n";
 	exit 1;
@@ -173,7 +175,6 @@ if [ $COMPILER_MAJOR -lt 3 -o $COMPILER_MAJOR -eq 2 -a $COMPILER_MINOR -lt 95 ] 
 fi;
 echo "C compiler '$COMPILER'"
 echo "C compiler version '$COMPILER_VERSION':			Ok"
-
 
 
 #############################################################
