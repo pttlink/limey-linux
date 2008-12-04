@@ -3,7 +3,7 @@
 # iptables
 #
 #############################################################
-IPTABLES_VER:=1.4.0
+IPTABLES_VER:=1.4.2
 IPTABLES_SOURCE_URL:=ftp.netfilter.org/pub/iptables
 IPTABLES_SOURCE:=iptables-$(IPTABLES_VER).tar.bz2
 IPTABLES_CAT:=$(BZCAT)
@@ -17,11 +17,21 @@ $(IPTABLES_BUILD_DIR)/.unpacked: $(DL_DIR)/$(IPTABLES_SOURCE)
 	touch $(IPTABLES_BUILD_DIR)/.unpacked
 
 $(IPTABLES_BUILD_DIR)/.configured: $(IPTABLES_BUILD_DIR)/.unpacked
+	(cd $(IPTABLES_BUILD_DIR); rm -rf config.cache; \
+                $(TARGET_CONFIGURE_OPTS) \
+                CFLAGS="$(TARGET_CFLAGS)" \
+                ./configure \
+                --target=$(GNU_TARGET_NAME) \
+                --host=$(GNU_TARGET_NAME) \
+                --build=$(GNU_HOST_NAME) \
+                --prefix=/usr \
+		--with-kernel=$(LINUX_HEADERS_DIR) \
+        );
 	# Allow patches.  Needed for openwrt for instance.
 	toolchain/patch-kernel.sh $(IPTABLES_BUILD_DIR) package/iptables/ iptables\*.patch
 	#
 	$(SED) "s;\[ -f /usr/include/netinet/ip6.h \];grep -q '__UCLIBC_HAS_IPV6__ 1' \
-		$(STAGING_DIR)/include/bits/uClibc_config.h;" $(IPTABLES_BUILD_DIR)/Makefile
+		(STAGING_DIR)/include/bits/uClibc_config.h;" $(IPTABLES_BUILD_DIR)/Makefile
 	touch $(IPTABLES_BUILD_DIR)/.configured
 
 $(IPTABLES_BUILD_DIR)/iptables: $(IPTABLES_BUILD_DIR)/.configured
