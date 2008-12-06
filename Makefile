@@ -59,7 +59,7 @@ SYSLINUX_SITE:=http://www.kernel.org/pub/linux/utils/boot/syslinux/Old/$(SYSLINU
 
 .PHONY: allbins
 
-allbins:	prist_root_fs_$(PROCESSOR) kernel.bzi 
+allbins:	prist_root_fs_$(PROCESSOR) kernel.bzi buildstate/linux_kdev 
 
 
 buildstate/buildroot_configured:
