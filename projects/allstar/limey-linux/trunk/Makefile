@@ -1,7 +1,7 @@
 #
 # Makefile for limey linux
 #
-CFDEVICE?=/dev/sda	# Important! Change this to your raw cf device node
+CFDEVICE?=/dev/sdg	# Important! Change this to your raw cf device node
 #MOBO?=VIA		# for VIA Mini-itx M6000, ME6000, SP8000, or CN10000
 #MOBO?=D201GLY2		# for Intel/Jetway D201GLY-2 motherboard
 MOBO=D945GCLF		# for Intel Atom D945GCLF
@@ -155,13 +155,13 @@ kernel.bzi:	prist_root_fs_$(PROCESSOR) buildstate/linux_built
 	ln -s linux/arch/i386/boot/bzImage kernel.bzi
 
 ramdisk.img: prist_root_fs_$(PROCESSOR)
-	sudo ./mkramdisk
+	sudo -E ./mkramdisk
 
 .PHONY:	cf cfimg clean distclean kerneldistclean syslinuxdistclean buildrootdistclean archive setup 
 
 
 cf:	ramdisk.img kernel.bzi buildstate/syslinux_built buildstate/linux_kdev
-	(export CFDEVICE=$(CFDEVICE); sudo ./mkcf)
+	(export CFDEVICE=$(CFDEVICE); sudo -E ./mkcf)
 
 cfzero:
 	(sudo dd if=/dev/zero of=$(CFDEVICE))
