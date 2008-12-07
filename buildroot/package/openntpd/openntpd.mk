@@ -3,7 +3,7 @@
 # OpenNTPD
 #
 #############################################################
-OPENNTPD_VERSION:=3.6.1p1
+OPENNTPD_VERSION:=3.9p1
 OPENNTPD_SOURCE:=openntpd-$(OPENNTPD_VERSION).tar.gz
 OPENNTPD_SITE:=ftp://ftp.openbsd.org/pub/OpenBSD/OpenNTPD
 OPENNTPD_DIR:=$(BUILD_DIR)/openntpd-$(OPENNTPD_VERSION)
