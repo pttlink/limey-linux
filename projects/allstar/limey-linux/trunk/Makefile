@@ -205,6 +205,9 @@ distclean:	kerneldistclean syslinuxdistclean buildrootdistclean
 	-rm -rf *.img
 	-rm -rf buildstate
 	-rm -rf buildroot/.c*
+	-rm buildroot/toolchain/uClibc/uClibc.config
+	-rm buildroot/toolchain/uClibc.config
+
 
 archive:	distclean
 	tar czf ../ll-vers-$(LLVERS).tar.gz *
