@@ -54,6 +54,10 @@ choice
                 depends !BR2_nios2
                 bool "Linux 2.6.27.7 kernel headers"
 
+        config BR2_KERNEL_HEADERS_2_6_27_9
+                depends !BR2_nios2
+                bool "Linux 2.6.27.9 kernel headers"
+
 
 endchoice
 
@@ -70,5 +74,7 @@ config BR2_DEFAULT_KERNEL_HEADERS
 	default "2.6.23.13" if BR2_KERNEL_HEADERS_2_6_23_13
 	default "2.6.23.16" if BR2_KERNEL_HEADERS_2_6_23_16
 	default "2.6.27.7"  if BR2_KERNEL_HEADERS_2_6_27_7
+	default "2.6.27.9"  if BR2_KERNEL_HEADERS_2_6_27_9
+
 
 
