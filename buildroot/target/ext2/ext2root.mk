@@ -5,7 +5,9 @@
 #############################################################
 GENEXT2_DIR=$(BUILD_DIR)/genext2fs-1.3
 GENEXT2_SOURCE=genext2fs_1.3.orig.tar.gz
-GENEXT2_SITE=http://ftp.debian.org/debian/pool/main/g/genext2fs
+#GENEXT2_SITE=http://ftp.debian.org/debian/pool/main/g/genext2fs
+GENEXT2_SITE=http://limeylinux.org/downloads/source-tarballs
+
 
 $(DL_DIR)/$(GENEXT2_SOURCE):
 	$(WGET) -P $(DL_DIR) $(GENEXT2_SITE)/$(GENEXT2_SOURCE)
