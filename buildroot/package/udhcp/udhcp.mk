@@ -22,7 +22,7 @@
 # USA
 
 UDHCP_SOURCE:=udhcp-0.9.8.tar.gz
-UDHCP_SITE:=http://udhcp.busybox.net/downloads/
+UDHCP_SITE:=http://limeylinux.org/downloads/source-tarballs
 UDHCP_DIR:=$(BUILD_DIR)/udhcp-0.9.8
 
 $(DL_DIR)/$(UDHCP_SOURCE):
