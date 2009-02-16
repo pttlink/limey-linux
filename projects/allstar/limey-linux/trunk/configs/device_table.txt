@@ -185,6 +185,10 @@
 
 # USB serial
 /dev/ttyUSB0	c	660	0	0	188	0	0	0	-
+/dev/ttyUSB1	c	660	0	0	188	1	0	0	-
+/dev/ttyUSB2	c	660	0	0	188	2	0	0	-
+/dev/ttyUSB3	c	660	0	0	188	3	0	0	-
+
 # USB Wireless
 /dev/ttyACM0	c	660	0	0	166	0	0	0	-
 # watchdog
