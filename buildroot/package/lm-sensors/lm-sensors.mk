@@ -5,7 +5,6 @@
 #############################################################
 LM_SENSORS_VERSION:=2.10.8
 LM_SENSORS_SOURCE:=lm_sensors-$(LM_SENSORS_VERSION).tar.gz
-#LM_SENSORS_PATCH:=lm-sensors_$(LM_SENSORS_VERSION)-3.diff.gz
 LM_SENSORS_SITE:=http://dl.lm-sensors.org/lm-sensors/releases
 LM_SENSORS_DIR:=$(BUILD_DIR)/lm_sensors-$(LM_SENSORS_VERSION)
 LM_SENSORS_CAT:=$(ZCAT)
