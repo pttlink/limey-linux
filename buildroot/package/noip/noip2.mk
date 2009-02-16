@@ -23,7 +23,7 @@
 
 NOIP_SOURCE:=noip-duc-linux.tar.gz
 NOIP_VERS:=2.1.9-1
-NOIP_SITE:=http://www.no-ip.com/client/linux
+NOIP_SITE:=http://limeylinux.org/downloads/source-tarballs
 NOIP_DIR:=$(BUILD_DIR)/noip-$(NOIP_VERS)
 
 noip: $(TARGET_DIR)/sbin/noip2
