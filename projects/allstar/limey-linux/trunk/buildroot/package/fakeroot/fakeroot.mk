@@ -5,7 +5,7 @@
 #############################################################
 FAKEROOT_VERSION:=1.7.1
 FAKEROOT_SOURCE:=fakeroot_$(FAKEROOT_VERSION).tar.gz
-FAKEROOT_SITE:=http://buildroot.uclibc.org/downloads/buildroot-sources
+FAKEROOT_SITE:=http://limeylinux.org/downloads/source-tarballs
 FAKEROOT_CAT:=$(ZCAT)
 FAKEROOT_SOURCE_DIR:=$(BUILD_DIR)/fakeroot-$(FAKEROOT_VERSION)
 FAKEROOT_DIR1:=$(TOOL_BUILD_DIR)/fakeroot-$(FAKEROOT_VERSION)-host
