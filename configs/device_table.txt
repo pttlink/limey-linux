@@ -92,8 +92,12 @@
 # Audio stuff
 /dev/audio	c	666	0	29	14	4	-	-	-
 /dev/audio1	c	666	0	29	14	20	-	-	-
+/dev/audio2	c	666	0	29	14	36	-	-	-
+/dev/audio3	c	666	0	29	14	52	-	-	-
 /dev/dsp	c	666	0	29	14	3	-	-	-
 /dev/dsp1	c	666	0	29	14	19	-	-	-
+/dev/dsp2	c	666	0	29	14	39	-	-	-
+/dev/dsp3	c	666	0	29	14	55	-	-	-
 /dev/sndstat	c	666	0	29	14	6	-	-	-
 /dev/snd	d	666	0	0	-	-	-	-	-
 /dev/snd/timer	c	666	0	0	116	33	-	-	-
