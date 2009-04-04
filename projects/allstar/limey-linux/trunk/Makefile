@@ -2,10 +2,10 @@
 # Makefile for limey linux
 #
 CFDEVICE?=/dev/sdg	# Important! Change this to your raw cf device node
-MOBO?=VIA		# for VIA Mini-itx M6000, ME6000, SP8000, or CN10000
+#MOBO?=VIA		# for VIA Mini-itx M6000, ME6000, SP8000, or CN10000
 #MOBO?=D201GLY2		# for Intel/Jetway D201GLY-2 motherboard
 #MOBO=D945GCLF		# for Intel Atom D945GCLF
-#MOBO=i3368g		# for iGologic i3386-LF motherboard
+MOBO=i3368g		# for iGologic i3386-LF motherboard
 
 # Do not mess with anything down here unless you know what you are doing!
 
