@@ -27,10 +27,10 @@ sync
 sleep 2 
 mkfs.msdos $FIRSTPART || exit 1
 echo "Filesystem created"
-dd if=$SYSLINUXPATH/mbr.bin of=$RAWDEV bs=512 count=1 || exit 1
+dd if=$SYSLINUXPATH/mbr/mbr.bin of=$RAWDEV bs=512 count=1 || exit 1
 sync
 echo "Boot sector copied"
-$SYSLINUXPATH/syslinux -s $FIRSTPART
+$SYSLINUXPATH/linux/syslinux -s $FIRSTPART
 sync
 echo "Syslinux installed"
 mount -t msdos $FIRSTPART mnt || exit 1

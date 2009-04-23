@@ -62,9 +62,9 @@ LINUX_PACKAGE:=$(strip $(LINUX_VERSION)).tar.bz2
 LINUX_SITE:=http://www.kernel.org/pub/linux/kernel/v2.6/$(LINUX_PACKAGE)
 LINUX_CROSS_COMPILE:=$(strip $(TOPDIR))/buildroot/build_$(PROCESSOR)/staging_dir/bin/$(PROCESSOR)-linux-
 
-SYSLINUX_VERSION:=syslinux-2.10
+SYSLINUX_VERSION:=syslinux-3.75
 SYSLINUX_PACKAGE:=$(SYSLINUX_VERSION).tar.bz2
-SYSLINUX_SITE:=http://www.kernel.org/pub/linux/utils/boot/syslinux/Old/$(SYSLINUX_PACKAGE)
+SYSLINUX_SITE:=http://www.kernel.org/pub/linux/utils/boot/syslinux/$(SYSLINUX_PACKAGE)
 
 .PHONY: allbins
 
@@ -156,7 +156,7 @@ buildstate/linux_kdev:	buildstate/linux_built
 	touch buildstate/linux_kdev
 
 buildstate/syslinux_built:buildstate/syslinux_unpacked
-	make -C syslinux syslinux
+	make -C syslinux 
 	touch buildstate/syslinux_built
 
 kernel.bzi:	prist_root_fs_$(PROCESSOR) buildstate/linux_built
@@ -194,7 +194,7 @@ kerneldistclean:
 
 syslinuxdistclean:
 	-rm buildstate/syslinux_*
-	-rm -rf syslinux syslinux-2.*
+	-rm -rf syslinux syslinux-3.*
 
 buildrootdistclean:
 	make -C buildroot distclean
