@@ -108,15 +108,18 @@ do
 		ANSWER=""
 		while [ -z $ANSWER ]
 		do
-			echo -n "Use (S)print or (Verizon) as the 1XEVDO Rev. A provider? "
+			echo -n "Use (S)print or (V)erizon or (A)t&t as the wireless provider? "
 			read PROVIN
 			if [ $PROVIN = V ] || [ $PROVIN = v ]
 			then
 				PRO=verizon
 				echo -n "Enter the assigned 10 digit telephone number: "
 				read TELNO
-			else
+			elif [ $PROVIN = S ] || [ $PROVIN = s ]
+			then
 				PRO=sprint
+			else
+				PRO=att
 			fi
 			echo "Enter the local ethernet IP address in the form XXX.XXX.XXX.XXX "
 			echo -n "(defaults to 192.168.1.1) :"

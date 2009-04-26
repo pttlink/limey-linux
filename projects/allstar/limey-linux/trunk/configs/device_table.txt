@@ -192,6 +192,19 @@
 /dev/ttyUSB1	c	660	0	0	188	1	0	0	-
 /dev/ttyUSB2	c	660	0	0	188	2	0	0	-
 /dev/ttyUSB3	c	660	0	0	188	3	0	0	-
+/dev/ttyUSB4    c       660     0       0       188     4       0       0       -
+/dev/ttyUSB5    c       660     0       0       188     5       0       0       -
+/dev/ttyUSB6    c       660     0       0       188     6       0       0       -
+/dev/ttyUSB7    c       660     0       0       188     7       0       0       -
+/dev/ttyUSB8    c       660     0       0       188     8       0       0       -
+/dev/ttyUSB9    c       660     0       0       188     9       0       0       -
+/dev/ttyUSB10    c       660     0       0       188     10       0       0       -
+/dev/ttyUSB11   c       660     0       0       188     11       0       0       -
+/dev/ttyUSB12    c       660     0       0       188     12       0       0       -
+/dev/ttyUSB13   c       660     0       0       188     13       0       0       -
+/dev/ttyUSB14   c       660     0       0       188     14      0       0       -
+/dev/ttyUSB15   c       660     0       0       188     15      0       0       -
+
 
 # USB Wireless
 /dev/ttyACM0	c	660	0	0	166	0	0	0	-
