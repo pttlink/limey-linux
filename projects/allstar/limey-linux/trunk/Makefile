@@ -173,7 +173,8 @@ cf:	ramdisk.img kernel.bzi buildstate/syslinux_built buildstate/linux_kdev
 	(export CFDEVICE=$(CFDEVICE); sudo -E ./mkcf)
 
 cfzero:
-	(sudo dd if=/dev/zero of=$(CFDEVICE))
+	-(sudo dd if=/dev/zero of=$(CFDEVICE))
+	make cf
 
 cfimg:
 	(sudo dd if=$(CFDEVICE) of=cfimg-$(LLVERS))
