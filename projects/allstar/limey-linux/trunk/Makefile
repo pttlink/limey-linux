@@ -64,7 +64,7 @@ LINUX_CROSS_COMPILE:=$(strip $(TOPDIR))/buildroot/build_$(PROCESSOR)/staging_dir
 
 SYSLINUX_VERSION:=syslinux-3.75
 SYSLINUX_PACKAGE:=$(SYSLINUX_VERSION).tar.bz2
-SYSLINUX_SITE:=http://www.kernel.org/pub/linux/utils/boot/syslinux/$(SYSLINUX_PACKAGE)
+SYSLINUX_SITE:=http://www.kernel.org/pub/linux/utils/boot/syslinux/Old/$(SYSLINUX_PACKAGE)
 
 .PHONY: allbins
 
