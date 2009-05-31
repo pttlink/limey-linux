@@ -5,7 +5,7 @@
 #############################################################
 RSYNC_VER:=2.6.9
 RSYNC_SOURCE:=rsync-$(RSYNC_VER).tar.gz
-RSYNC_SITE:=http://rsync.samba.org/ftp/rsync/
+RSYNC_SITE:=http://rsync.samba.org/ftp/rsync/src
 RSYNC_DIR:=$(BUILD_DIR)/rsync-$(RSYNC_VER)
 RSYNC_CAT:=$(ZCAT)
 RSYNC_BINARY:=rsync
