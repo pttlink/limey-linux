@@ -147,9 +147,9 @@ buildstate/linux_kdev:	buildstate/linux_built
 	(cd kdev/include; rm -rf asm-alpha asm-arm asm-arm26 asm-cris \
         asm-frv asm-h8300 asm-ia64 asm_m32r asm-m68k asm-m68knommu asm-m32r asm-mips asm-mips64 \
 	asm-parisc asm-ppc asm-ppc64 asm-s390 asm-s390x \
-        asm-sh asm-sh64 asm-sparc asm-sparc64 asm-x86_64 asm-um asm-v850)
-	(cd kdev/arch; rm -rf alpha arm arm26 cris frv h8300 ia64 m32r m68k m68knommu \
-         mips parisc ppc ppc64 s390 sh sh64 sparc sparc64 um v850 x86_64)
+        asm-sh asm-sh64 asm-sparc asm-sparc64 asm-x86_64 asm-um asm-v850 firmware security) 
+	(cd kdev/arch; rm -rf alpha arm arm26 avr32 blankfin cris frv h8300 ia64 m32r m68k m68knommu \
+         mips mn10300 parisc ppc ppc64 powerpc s390 sh sh64 sparc sparc64 um v850 x86/boot x86/kernel x86/pci x86_64 xtensa)
 	(cd kdev/scripts/basic; $(LINUX_CROSS_COMPILE)gcc fixdep.c -o fixdep) # Recompile with target gcc
 	(cd kdev/scripts/mod; $(LINUX_CROSS_COMPILE)gcc modpost.c file2alias.c sumversion.c -o modpost) # Recompile with target gcc
 	(cd kdev; tar cfz ../kdev.tgz .)
