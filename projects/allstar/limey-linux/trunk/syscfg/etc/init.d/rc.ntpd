@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# Wait for network connectivity!
+#
+while [ ! -f /var/run/network-up ]
+do
+        sleep 2
+        done
+sleep 1
+
+#
+# Try and set the date and time
+#
+
+NTPD=$(which ntpd)
+
+if [ -z $NTPD ]
+then
+	exit 0
+fi
+
+$NTPD -s
+
+exit 0
