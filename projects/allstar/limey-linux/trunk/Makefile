@@ -68,7 +68,7 @@ SYSLINUX_SITE:=http://www.kernel.org/pub/linux/utils/boot/syslinux/Old/$(SYSLINU
 
 .PHONY: allbins
 
-allbins:	prist_root_fs_$(PROCESSOR) kernel.bzi buildstate/linux_kdev 
+allbins:	prist_root_fs_$(PROCESSOR) kernel.bzi buildstate/linux_kdev syscfg.tgz
 
 
 buildstate/buildroot_configured:
@@ -166,6 +166,10 @@ kernel.bzi:	prist_root_fs_$(PROCESSOR) buildstate/linux_built
 ramdisk.img: prist_root_fs_$(PROCESSOR)
 	sudo -E ./mkramdisk
 
+syscfg.tgz:
+	(cd syscfg; tar czf ../syscfg.tgz *)
+
+
 .PHONY:	cf cfimg clean distclean kerneldistclean syslinuxdistclean buildrootdistclean archive setup 
 
 
@@ -211,7 +215,7 @@ distclean:	kerneldistclean syslinuxdistclean buildrootdistclean
 	-rm -rf dl
 	-rm -rf kdev
 	-rm -rf kdev.tgz
-	-rm -rf syscfg
+	-rm -rf syscfg.tgz
 	-rm -rf *.img
 	-rm -rf buildstate
 	-rm -rf buildroot/.c*
@@ -223,6 +227,4 @@ archive:	distclean
 	tar czf ../ll-vers-$(LLVERS).tar.gz *
 
 setup:	buildstate/syslinux_built	
-	mkdir -p syscfg
-	(cd syscfg; tar xzf ../syscfg.tgz)
 	touch buildstate/syscfg_unpacked;
