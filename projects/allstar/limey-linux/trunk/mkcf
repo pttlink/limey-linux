@@ -39,6 +39,7 @@ cp kernel.bzi mnt/kernel.bzi
 cp ramdisk.img mnt/ramdisk.img
 cp syscfg.tgz mnt/syscfg.tgz
 cp kdev.tgz mnt/kdev.tgz
+(cd syscfg; tar czf ../mnt/syscfg.tgz --exclude=.svn *)
 touch mnt/firsttim
 sync
 echo "Kernel and root FS copied"
