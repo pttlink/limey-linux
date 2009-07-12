@@ -5,8 +5,8 @@
 #############################################################
 
 OPENSSH_SITE:=ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable
-OPENSSH_DIR:=$(BUILD_DIR)/openssh-3.9p1
-OPENSSH_SOURCE:=openssh-3.9p1.tar.gz
+OPENSSH_DIR:=$(BUILD_DIR)/openssh-5.1p1
+OPENSSH_SOURCE:=openssh-5.1p1.tar.gz
 
 $(DL_DIR)/$(OPENSSH_SOURCE):
 	$(WGET) -P $(DL_DIR) $(OPENSSH_SITE)/$(OPENSSH_SOURCE)
