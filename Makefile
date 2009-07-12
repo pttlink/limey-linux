@@ -66,9 +66,9 @@ SYSLINUX_VERSION:=syslinux-3.75
 SYSLINUX_PACKAGE:=$(SYSLINUX_VERSION).tar.bz2
 SYSLINUX_SITE:=http://www.kernel.org/pub/linux/utils/boot/syslinux/Old/$(SYSLINUX_PACKAGE)
 
-.PHONY: allbins
+.PHONY: allbins cf cfimg clean distclean kerneldistclean syslinuxdistclean buildrootdistclean archive setup
 
-allbins:	prist_root_fs_$(PROCESSOR) kernel.bzi buildstate/linux_kdev syscfg.tgz
+allbins:	prist_root_fs_$(PROCESSOR) kernel.bzi buildstate/linux_kdev
 
 
 buildstate/buildroot_configured:
@@ -166,12 +166,7 @@ kernel.bzi:	prist_root_fs_$(PROCESSOR) buildstate/linux_built
 ramdisk.img: prist_root_fs_$(PROCESSOR)
 	sudo -E ./mkramdisk
 
-syscfg.tgz:
-	(cd syscfg; tar czf ../syscfg.tgz *)
-
-
 .PHONY:	cf cfimg clean distclean kerneldistclean syslinuxdistclean buildrootdistclean archive setup 
-
 
 cf:	ramdisk.img kernel.bzi buildstate/syslinux_built buildstate/linux_kdev
 	(export CFDEVICE=$(CFDEVICE); sudo -E ./mkcf)
@@ -224,7 +219,7 @@ distclean:	kerneldistclean syslinuxdistclean buildrootdistclean
 
 
 archive:	distclean
-	tar czf ../ll-vers-$(LLVERS).tar.gz *
+	tar czf ../ll-vers-$(LLVERS).tar.gz --exclude=.svn *
 
 setup:	buildstate/syslinux_built	
 	touch buildstate/syscfg_unpacked;
