@@ -14,6 +14,7 @@ $(DL_DIR)/$(OPENSSH_SOURCE):
 $(OPENSSH_DIR)/.unpacked: $(DL_DIR)/$(OPENSSH_SOURCE)
 	$(ZCAT) $(DL_DIR)/$(OPENSSH_SOURCE) | tar -C $(BUILD_DIR) $(TAR_OPTIONS) -
 	toolchain/patch-kernel.sh $(OPENSSH_DIR) package/openssh/ openssh\*.patch
+	cp package/openssh/S50sshd $(OPENSSH_DIR)
 	touch $(OPENSSH_DIR)/.unpacked
 
 $(OPENSSH_DIR)/.configured: $(OPENSSH_DIR)/.unpacked
