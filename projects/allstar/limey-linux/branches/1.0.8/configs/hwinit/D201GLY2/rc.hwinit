@@ -1,0 +1,6 @@
+modprobe sis5513
+modprobe sis900
+modprobe ehci_hcd
+modprobe ohci_hcd
+
+
