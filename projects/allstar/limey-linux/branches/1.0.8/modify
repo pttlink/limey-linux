@@ -3,6 +3,10 @@
 losetup /dev/loop0 root_fs_${PROCESSOR}
 mount /dev/loop0 mnt
 cp -a modfiles/* mnt
+cp ${HWINITFILE}/rc.hwinit mnt/etc/init.d # these vary depending on m/b h/w
+chmod 750 mnt/etc/init.d/rc.hwinit
+cp -a linux/linux_modules/* mnt  # linux modules
+(cd mnt/lib/modules/${KVERS}; rm build source; mkdir -p build)
 
 # create the issue file on the fly
 
@@ -59,7 +63,7 @@ mkdir -p mnt/usr/src mnt/usr/local/bin mnt/usr/local/sbin
 mkdir -p mnt/var/www/html 
 
 # make the dir for modules to be loaded
-mkdir -p mnt/lib/modules/${KVERS}/build
+
 
 # root owns 'em all
 chown -R root:root mnt/*
@@ -68,5 +72,4 @@ chmod 4755 mnt/usr/bin/sudo
 
 umount mnt
 losetup -d /dev/loop0
-
 
