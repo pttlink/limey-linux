@@ -8,6 +8,12 @@
 PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/sbin
 export PATH
 
+if [ -e /etc/init.d/rc.hwinit ]
+then
+	/etc/init.d/rc.hwinit
+	sleep 2;
+fi
+
 cd /
 
 mount -r -t msdos /dev/hda1 /mnt/cf || exit 1
