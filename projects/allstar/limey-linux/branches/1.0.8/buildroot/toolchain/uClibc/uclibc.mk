@@ -474,7 +474,7 @@ uclibc-menuconfig: host-sed $(UCLIBC_DIR)/.config
 	touch -c $(UCLIBC_DIR)/.config
 
 
-$(STAGING_DIR)/usr/lib/libc.a: $(UCLIBC_DIR)/lib/libc.a
+$(STAGING_DIR)/usr/lib/libc.a: | $(UCLIBC_DIR)/lib/libc.a
 ifneq ($(BR2_TOOLCHAIN_SYSROOT),y)
 	$(MAKE1) -C $(UCLIBC_DIR) \
 		PREFIX= \
