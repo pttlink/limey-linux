@@ -8,9 +8,9 @@
 PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/sbin
 export PATH
 
-if [ -e /etc/init.d/rc.hwinit ]
+if [ -e /etc/init.d/rc.hwdetect ]
 then
-	/etc/init.d/rc.hwinit
+	/etc/init.d/rc.hwdetect
 	sleep 2;
 fi
 

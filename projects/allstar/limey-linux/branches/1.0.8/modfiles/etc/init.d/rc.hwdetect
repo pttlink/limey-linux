@@ -1,0 +1,33 @@
+#!/bin/bash
+DMID=/usr/bin/dmidecode
+MANUF=$($DMID -s baseboard-manufacturer)
+MODEL=$($DMID -s baseboard-product-name)
+
+
+if [ "$MANUF" = "Intel Corporation" ]
+then
+	case "$MODEL" in
+		D201GLY)
+			modprobe sis5513
+			modprobe sis900
+			modprobe ehci_hcd
+			modprobe ohci_hcd
+			exit 0
+			;;
+		D945GCLF)
+			echo "Insert modprobes for $MANUF $MODEL!"
+			exit 1
+			;;
+
+		*)
+			echo "Unknown MOBO: $MANUF $MODEL"
+			exit 1
+	esac
+elif [ "$MANUF" = "" ]
+then
+	if [ "$MODEL" = i855-ICH4 ]
+	then
+		echo "Insert modprobes for $MANUF $MODEL"
+	fi
+fi
+
