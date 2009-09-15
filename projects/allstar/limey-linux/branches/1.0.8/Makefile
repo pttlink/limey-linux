@@ -21,7 +21,6 @@ LLVERS:=$(strip $(VERSION))
 KVERS:=$(strip $(KERNELVERSION))
 TOPDIR:=$(strip $(BUILDDIR))
 MB:=$(strip $(MOBO))
-HWINITFILE:=configs/hwinit/$(MOBO)
 
 ifeq "$(MB)" "VIA"
 LINUX_ARCH:=i386
@@ -174,7 +173,7 @@ buildstate/linux_kdev:	buildstate/linux_savemodules
 
 
 ramdisk.img: buildstate/linux_kdev buildstate/buildroot_built
-	(export HWINITFILE=$(HWINITFILE); sudo -E ./mkramdisk)
+	sudo -E ./mkramdisk
 #
 #
 # phony targets

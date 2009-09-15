@@ -15,19 +15,28 @@ then
 			exit 0
 			;;
 		D945GCLF)
-			echo "Insert modprobes for $MANUF $MODEL!"
-			exit 1
+			modprobe piix
+			modprobe 8139too
+			modprobe ehci_hcd
+			modprobe uhci_hcd
+			exit 0
 			;;
 
 		*)
 			echo "Unknown MOBO: $MANUF $MODEL"
 			exit 1
 	esac
-elif [ "$MANUF" = "" ]
+fi
+
+# i3386g has no manufacturer!
+
+if [ "$MODEL" = "i855-ICH4" ]
 then
-	if [ "$MODEL" = i855-ICH4 ]
-	then
-		echo "Insert modprobes for $MANUF $MODEL"
-	fi
+	modprobe piix
+	modprobe 8139too
+	modprobe r8169
+	modprobe ehci_hcd
+	modprobe uhci_hcd
+	exit 0
 fi
 
