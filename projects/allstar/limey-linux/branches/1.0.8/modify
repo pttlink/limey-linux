@@ -24,7 +24,6 @@ echo "# by user : ${USERNAME}" >> mnt/etc/sysinfo
 echo "# on host : ${BLDHOST}" >> mnt/etc/sysinfo
 echo "#" >> mnt/etc/sysinfo
 echo PROCESSOR=${PROCESSOR} >> mnt/etc/sysinfo
-echo MOBO=${MOBO} >> mnt/etc/sysinfo
 echo KVERS=${KVERS} >> mnt/etc/sysinfo
 echo LLVERS=${LLVERS} >> mnt/etc/sysinfo
 
@@ -59,8 +58,6 @@ find . -name CVS -print0 | xargs -0 rm -rf)
 
 mkdir -p mnt/usr/src mnt/usr/local/bin mnt/usr/local/sbin 
 mkdir -p mnt/var/www/html 
-
-# make the dir for modules to be loaded
 
 
 # root owns 'em all
