@@ -12,6 +12,8 @@ then
 			modprobe sis900
 			modprobe ehci_hcd
 			modprobe ohci_hcd
+			modprobe coretemp
+			modprobe w83627ehf
 			exit 0
 			;;
 		D945GCLF)
@@ -19,6 +21,8 @@ then
 			modprobe 8139too
 			modprobe ehci_hcd
 			modprobe uhci_hcd
+			modprobe smsc47m1
+			modprobe smsc47m192
 			exit 0
 			;;
 
@@ -37,6 +41,7 @@ then
 	modprobe r8169
 	modprobe ehci_hcd
 	modprobe uhci_hcd
+	modprobe w83627ehf 
 	exit 0
 fi
 
