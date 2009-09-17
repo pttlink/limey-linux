@@ -220,6 +220,7 @@ clean:
 linuxdistclean:
 	-rm buildstate/linux_*
 	-rm kernel.bzi
+	-rm ramdisk.img
 	-rm -rf linux* kdev
 
 syslinuxdistclean:
