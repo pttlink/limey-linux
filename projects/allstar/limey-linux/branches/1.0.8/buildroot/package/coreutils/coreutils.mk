@@ -3,7 +3,7 @@
 # coreutils
 #
 #############################################################
-COREUTILS_VERSION:=7.4
+COREUTILS_VERSION:=7.5
 COREUTILS_SOURCE:=coreutils-$(COREUTILS_VERSION).tar.gz
 #COREUTILS_SITE:=ftp://alpha.gnu.org/gnu/coreutils/
 COREUTILS_SITE:=$(BR2_GNU_MIRROR)/coreutils
