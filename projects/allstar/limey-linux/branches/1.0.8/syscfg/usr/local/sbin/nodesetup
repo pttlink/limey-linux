@@ -77,7 +77,7 @@ echo "Doing sanity checks on rpt.conf, extensions.conf, iax.conf, and savenode.c
 if [ -e $CONFIGS/extensions.conf ]
 then
 	grep -q -s NODE= $CONFIGS/extensions.conf || die "extensions.conf missing NODE=xxxx"
-	NODE=$(grep NODE= $CONFIGS/extensions.conf | cut --delim="=" -f2 | cut -f1 | cut --delim=" " -f1 | cut --delim=";" -f1)
+	NODE=$(grep NODE= /etc/asterisk/extensions.conf | gawk -F'=' '{print $2}')
 else
 	die "$CONFIGS/extensions.conf not found"
 fi
@@ -90,10 +90,10 @@ fi
 if [ -e $CONFIGS/iax.conf ]
 then	
         grep -q -s register\.allstarlink\.org $CONFIGS/iax.conf || die "No allstar link register statement in iax.conf! (old file maybe?)"
-	REG1=$(grep register= $CONFIGS/iax.conf | cut --delim="=" -f2)
-	REG=$(echo "$REG1" | cut --delim="@" -f1)
-	REGNODE=$(echo "$REG" | cut --delim=":" -f1)
-	REGPSWD=$(echo "$REG" | cut --delim=":" -f2)
+	REG1=$(grep register= $CONFIGS/iax.conf | gawk -F'=' '{print $2}')
+	REG=$(echo "$REG1" | gawk -F'@' '{print $1}')
+	REGNODE=$(echo "$REG" | gawk -F':' '{print $1}')
+	REGPSWD=$(echo "$REG" | gawk -F':' '{print $2}')
 	if [ $REGNODE != A$NODE ]
 	then
 		die "Node numbers in rpt.conf and iax.conf are different!"
@@ -101,15 +101,14 @@ then
 else
 	die "$CONFIGS/iax.conf not found"
 fi
-
 if [ -e $CONFIGS/savenode.conf ]
 then
 	grep -q -s NODE= $CONFIGS/savenode.conf || die "savenode.conf missing NODE=xxxx"
 	grep -q -s PASSWORD= $CONFIGS/savenode.conf || die "savenode.conf missing PASSWORD=xxxx"
 	grep -q -s ENABLE= $CONFIGS/savenode.conf || die "savenode.conf missing ENABLE=x"
-	SNODE=$(grep NODE= $CONFIGS/savenode.conf | cut --delim="=" -f2 | cut -f1 | cut --delim=" " -f1 | cut --delim=";" -f1)
-	SPASSWORD=$(grep PASSWORD= $CONFIGS/savenode.conf | cut --delim="=" -f2 | cut -f1 | cut --delim=" " -f1 | cut --delim=";" -f1)
-	SENABLE=$(grep ENABLE= $CONFIGS/savenode.conf | cut --delim="=" -f2 | cut -f1 | cut --delim=" " -f1 | cut --delim=";" -f1)
+	SNODE=$(grep NODE= $CONFIGS/savenode.conf | gawk -F'=' '{print $2}')
+	SPASSWORD=$(grep PASSWORD= $CONFIGS/savenode.conf | gawk -F'=' '{print $2}')
+	SENABLE=$(grep ENABLE= $CONFIGS/savenode.conf | gawk -F'=' '{print $2}')
 	if [ $NODE != $SNODE ]
 	then
 		die "Node numbers in iax.conf and savenode.conf are different!"
