@@ -5,8 +5,8 @@ export PATH=\
 /sbin:\
 /usr/bin:\
 /usr/sbin:\
-/usr/bin/X11:\
-/usr/local/bin
+/usr/local/bin:\
+/usr/local/sbin
 
 # If running interactively, then:
 if [ "$PS1" ]; then
