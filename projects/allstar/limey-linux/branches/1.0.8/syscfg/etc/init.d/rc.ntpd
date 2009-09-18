@@ -6,19 +6,17 @@ while [ ! -f /var/run/network-up ]
 do
         sleep 2
         done
-sleep 1
-
 #
 # Try and set the date and time
 #
-
 NTPD=$(which ntpd)
 
 if [ -z $NTPD ]
 then
 	exit 0
 fi
-
+/etc/init.d/S30crond stop
+sleep 1
 $NTPD -s
-
+/etc/init.d/S30crond start
 exit 0
