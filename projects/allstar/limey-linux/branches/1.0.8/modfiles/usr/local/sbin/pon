@@ -44,7 +44,7 @@ do
 		tc filter add dev ppp0 protocol ip parent 1: prio 1 u32 match ip tos 0x10 0xff flowid 1:2
 		# We are done!!
 		echo "Set up for NAT operation"
-		/sbin/udhcpd
+		/usr/sbin/udhcpd
 		touch /var/run/network-up
 		exit 0
 	fi
