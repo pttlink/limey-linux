@@ -54,7 +54,7 @@ SYSLINUX_VERSION:=syslinux-3.75
 SYSLINUX_PACKAGE:=$(SYSLINUX_VERSION).tar.bz2
 SYSLINUX_SITE:=http://www.kernel.org/pub/linux/utils/boot/syslinux/Old/$(SYSLINUX_PACKAGE)
 
-.PHONY: allbins cf cfimg clean distclean linuxdistclean syslinuxdistclean lc brconfig brremake buildrootdistclean archive savemods ramdisk
+.PHONY: allbins cf cfimg clean distclean linuxdistclean syslinuxdistclean lcconfig brconfig brremake buildrootdistclean archive savemods ramdisk
 
 allbins:	buildstate/syslinux_built buildstate buildstate/buildroot_built buildstate/linux_kdev
 
@@ -175,10 +175,11 @@ kernel:	buildstate/linux_kdev
 brcconfig: buildstate
 	-rm prist_root_fs_$(PROCESSOR) 
 	-rm buildroot/binaries/limey/rootfs.$(PROCESSOR).ext2:
-	-rm buildstate/buildroot_configured
+	-rm buildstate/buildroot_configured buildstate/buildroot_made buildstate/buildroot_built
 	make -C buildroot menuconfig
 
-lc: buildstate buildstate/linux_patched
+lcconfig: buildstate buildstate/linux_patched
+	-rm buildstate/linux_built
 	make -C linux mrproper ARCH=$(LINUX_ARCH)
 	cp configs/$(KERNEL_CONFIG_FILE) linux/.config
 	make -C linux menuconfig
