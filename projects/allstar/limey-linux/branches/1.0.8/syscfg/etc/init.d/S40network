@@ -1,3 +1,6 @@
+PATH=$PATH:/usr/local/sbin
+export PATH
+
 #!/bin/sh
 #
 # Start the network....
