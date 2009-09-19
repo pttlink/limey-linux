@@ -2,14 +2,14 @@
 # Makefile for limey linux
 #
 
-DLSAVE:=../dlsave
-
-
-CFDEVICE?=/dev/sdg	# Important! Change this to your raw cf device node
-#MOBO?=VIA		# for VIA Mini-itx M6000, ME6000, SP8000, or CN10000
-MOBO?=D201GLY2		# for Intel/Jetway D201GLY-2 motherboard
-#MOBO=D945GCLF		# for Intel Atom D945GCLF
-#MOBO=i3368g		# for iGologic i3386-LF motherboard
+# Place to store our source tarballs so that they don't have to be downloaded from the Internet between make distcleans
+DLSAVE?=../dlsave
+# Important! Change this to your raw cf device node
+CFDEVICE?=/dev/sdg
+# for Non-DMI Capable VIA Mini-itx M6000, ME6000, SP8000, or CN10000
+#MOBO?=NONDMI-586
+# for DMI-Capable Intel D201GLY2, D945GCLF, or Igoe Logic I3386g
+MOBO?=DMI-686
 
 # Do not mess with anything down here unless you know what you are doing!
 
@@ -22,28 +22,14 @@ KVERS:=$(strip $(KERNELVERSION))
 TOPDIR:=$(strip $(BUILDDIR))
 MB:=$(strip $(MOBO))
 
-ifeq "$(MB)" "VIA"
+ifeq "$(MB)" "NONDMI-586"
 LINUX_ARCH:=i386
 PROCESSOR:=i586
 KERNEL_CONFIG_FILE:=i586-kernel-generic.config
 BUILDROOT_CONFIG_FILE:=i586-buildroot.config
 UCLIBC_CONFIG_FILE:=i586-uclibc.config
 else
-ifeq "$(MB)" "D201GLY2"
-LINUX_ARCH:=i386
-PROCESSOR:=i686
-KERNEL_CONFIG_FILE:=i686-kernel-generic.config
-BUILDROOT_CONFIG_FILE:=i686-buildroot.config
-UCLIBC_CONFIG_FILE:=i686-uclibc.config
-else
-ifeq "$(MB)" "D945GCLF"
-LINUX_ARCH:=i386
-PROCESSOR:=i686
-KERNEL_CONFIG_FILE:=i686-kernel-generic.config
-BUILDROOT_CONFIG_FILE:=i686-buildroot.config
-UCLIBC_CONFIG_FILE:=i686-uclibc.config
-else
-ifeq "$(MB)" "i3368g"
+ifeq "$(MB)" "DMI-686"
 LINUX_ARCH:=i386
 PROCESSOR:=i686
 KERNEL_CONFIG_FILE:=i686-kernel-generic.config
@@ -51,8 +37,6 @@ BUILDROOT_CONFIG_FILE:=i686-buildroot.config
 UCLIBC_CONFIG_FILE:=i686-uclibc.config
 else
 $(error "Unknown or unspecified motherboard: $(MOBO)")
-endif
-endif
 endif
 endif
 
@@ -70,7 +54,7 @@ SYSLINUX_VERSION:=syslinux-3.75
 SYSLINUX_PACKAGE:=$(SYSLINUX_VERSION).tar.bz2
 SYSLINUX_SITE:=http://www.kernel.org/pub/linux/utils/boot/syslinux/Old/$(SYSLINUX_PACKAGE)
 
-.PHONY: allbins cf cfimg clean distclean linuxdistclean syslinuxdistclean lc brc buildrootdistclean archive savemods ramdisk
+.PHONY: allbins cf cfimg clean distclean linuxdistclean syslinuxdistclean lc brconfig brremake buildrootdistclean archive savemods ramdisk
 
 allbins:	buildstate/syslinux_built buildstate buildstate/buildroot_built buildstate/linux_kdev
 
@@ -88,7 +72,7 @@ buildstate/ready:
 	cp configs/$(UCLIBC_CONFIG_FILE) buildroot/uClibc.config
 	cp configs/busybox.config buildroot/busybox.config
 	cp configs/device_table.txt buildroot/target/generic 
-	touch buildstate/ready
+	touch $@
 
 buildstate/syslinux_downloaded: buildstate/ready
 	-rm syslinux buildstate/syslinux_downloaded
@@ -97,35 +81,39 @@ buildstate/syslinux_downloaded: buildstate/ready
 	then \
 	(cd $(DLSAVE); wget $(SYSLINUX_SITE)); \
 	fi
-	touch buildstate/syslinux_downloaded
+	touch $@
 
 buildstate/syslinux_unpacked: buildstate/syslinux_downloaded
 	tar xjf $(DLSAVE)/$(SYSLINUX_PACKAGE)
 	ln -s $(SYSLINUX_VERSION) syslinux
-	touch buildstate/syslinux_unpacked
+	touch $@
 
 buildstate/syslinux_built:buildstate/syslinux_unpacked
 	make -C syslinux 
-	touch buildstate/syslinux_built
+	touch $@
 
 buildstate/buildroot_configured: buildstate/ready
 	 make -C buildroot oldconfig
-	touch buildstate/buildroot_configured
+	touch $@
 
 buildstate/buildroot_made: buildstate/buildroot_configured 
 	make -C buildroot 
-	touch	buildstate/buildroot_made
+	touch $@
 
 buildstate/buildroot_built: buildstate/buildroot_made
 	cp buildroot/binaries/limey/rootfs.$(PROCESSOR).ext2 prist_root_fs_$(PROCESSOR)
-	touch	buildstate/buildroot_built
+	-if [ -d $(DLSAVE) ]; \
+	then \
+	(cp -u buildroot/dl/* $(DLSAVE)); \
+	fi   
+	touch $@
 
 buildstate/linux_downloaded: buildstate/ready
 	if ! [ -f $(DLSAVE)/$(LINUX_PACKAGE) ]; \
 	then \
 	(cd $(DLSAVE); wget $(LINUX_SITE)); \
 	fi
-	touch buildstate/linux_downloaded
+	touch $@
 
 buildstate/linux_unpacked:	buildstate/linux_downloaded
 	tar xjf $(DLSAVE)/$(LINUX_PACKAGE)
@@ -133,23 +121,23 @@ buildstate/linux_unpacked:	buildstate/linux_downloaded
 	ln -s $(LINUX_VERSION) linux
 
 buildstate/linux_patched: buildstate/linux_unpacked
-	touch buildstate/linux_patched	
+	touch $@	
 
 buildstate/linux_configured:    buildstate/linux_patched
 	make -C linux mrproper ARCH=$(LINUX_ARCH)
 	cp configs/$(KERNEL_CONFIG_FILE) linux/.config
 	make -C linux oldconfig ARCH=$(LINUX_ARCH)
-	touch buildstate/linux_configured
+	touch $@
 
 buildstate/linux_built: buildstate/linux_configured
 	echo $(LINUX_CROSS_COMPILE)
 	make CROSS_COMPILE="$(LINUX_CROSS_COMPILE)" -C linux bzImage ARCH=$(LINUX_ARCH)
 	make CROSS_COMPILE="$(LINUX_CROSS_COMPILE)" -C linux modules ARCH=$(LINUX_ARCH)
-	touch buildstate/linux_built
+	touch $@
 
 buildstate/linux_savemodules: buildstate/linux_built
 	make CROSS_COMPILE="$(LINUX_CROSS_COMPILE)" -C linux modules_install INSTALL_MOD_PATH=linux_modules  ARCH=$(LINUX_ARCH)
-	touch buildstate/linux_savemodules
+	touch $@
 
 # Build a partial 2.6 kernel tree with module building tools and include files
 
@@ -169,7 +157,7 @@ buildstate/linux_kdev:	buildstate/linux_savemodules
 	(cd kdev; tar cfz ../kdev.tgz .)
 	-rm kernel.bzi
 	ln -s linux/arch/i386/boot/bzImage kernel.bzi
-	touch buildstate/linux_kdev
+	touch $@
 
 
 ramdisk.img: buildstate/linux_kdev buildstate/buildroot_built
@@ -184,7 +172,7 @@ ramdisk: ramdisk.img
 
 kernel:	buildstate/linux_kdev
 
-brc: buildstate
+brcconfig: buildstate
 	-rm prist_root_fs_$(PROCESSOR) 
 	-rm buildroot/binaries/limey/rootfs.$(PROCESSOR).ext2:
 	-rm buildstate/buildroot_configured
@@ -227,6 +215,14 @@ syslinuxdistclean:
 	-rm buildstate/syslinux_*
 	-rm -rf syslinux syslinux-3.*
 
+
+brremake:
+	-rm ramdisk.img
+	-rm prist_root_fs_$(PROCESSOR)
+	-rm root_fs_$(PROCESSOR)
+	-rm buildstate/buildroot_made
+	-rm buildstate/buildroot_built
+	
 buildrootdistclean:
 	-make -C buildroot distclean
 	-rm -rf buildroot/build_$(PROCESSOR)
