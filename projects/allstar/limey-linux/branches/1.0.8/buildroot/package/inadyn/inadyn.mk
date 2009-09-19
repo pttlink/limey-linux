@@ -19,13 +19,17 @@ $(INADYN_DIR)/.source: $(DL_DIR)/$(INADYN_SOURCE)
 	$(ZCAT) $(DL_DIR)/$(INADYN_SOURCE) | tar -C $(BUILD_DIR) $(TAR_OPTIONS) -
 	touch $@
 
-$(INADYN_DIR)/$(INADYN_BINARY): $(INADYN_DIR)/.source
+$(INADYN_DIR)/.patched: $(INADYN_DIR)/.source
+	patch -d $(INADYN_DIR) -p0 < package/inadyn/inadyn.patch
+	touch $@
+
+$(INADYN_DIR)/$(INADYN_BINARY): $(INADYN_DIR)/.patched
 	$(MAKE) CC="$(TARGET_CC)" PREFIX=\"\" -C $(INADYN_DIR)
 
 $(TARGET_DIR)/$(INADYN_TARGET_BINARY): $(INADYN_DIR)/$(INADYN_BINARY)
 	$(INSTALL) -m 0770 -D $(INADYN_DIR)/$(INADYN_BINARY) $(TARGET_DIR)/$(INADYN_TARGET_BINARY)
 
-inadyn: $(TARGET_DIR)/$(INADYN_TARGET_BINARY)
+inadyn: uclibc $(TARGET_DIR)/$(INADYN_TARGET_BINARY)
 
 inadyn-source:	$(DL_DIR)/$(INADYN_SOURCE)
 	
