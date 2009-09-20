@@ -209,7 +209,7 @@ clean:
 linuxdistclean:
 	-rm buildstate/linux_*
 	-rm kernel.bzi
-	-rm ramdisk.img
+	-rm -rf ramdisk.img
 	-rm -rf linux* kdev
 
 syslinuxdistclean:
@@ -218,8 +218,8 @@ syslinuxdistclean:
 
 
 brremake:
-	-rm ramdisk.img
-	-rm prist_root_fs_$(PROCESSOR)
+	-rm -rf ramdisk.img
+	-rm -rf prist_root_fs_$(PROCESSOR)
 	-rm root_fs_$(PROCESSOR)
 	-rm buildstate/buildroot_made
 	-rm buildstate/buildroot_built
