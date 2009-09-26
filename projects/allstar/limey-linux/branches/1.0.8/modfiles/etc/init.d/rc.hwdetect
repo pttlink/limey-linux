@@ -3,6 +3,26 @@ DMID=/usr/bin/dmidecode
 MANUF=$($DMID -s baseboard-manufacturer)
 MODEL=$($DMID -s baseboard-product-name)
 
+. /etc/sysinfo
+if [ "$PROCESSOR"=="i586" ]
+then
+	# Test for VIA motherboards
+	lspci | grep Rhine
+	if [ $? -ne 0 ]
+	then
+		exit 1
+	fi
+	modprobe via-rhine
+	modprobe via82cxxx
+	modprobe ehci-hcd
+	modprobe uhci-hcd
+	modprobe vt1211
+	modprobe vt8231
+	exit 0
+fi
+
+# 686 motherboards from this point forward 
+		
 
 if [ "$MANUF" = "Intel Corporation" ]
 then

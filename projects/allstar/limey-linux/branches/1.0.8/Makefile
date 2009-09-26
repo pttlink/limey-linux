@@ -7,9 +7,9 @@ DLSAVE?=../dlsave
 # Important! Change this to your raw cf device node
 CFDEVICE?=/dev/sdg
 # for Non-DMI Capable VIA Mini-itx M6000, ME6000, SP8000, or CN10000
-#MOBO?=NONDMI-586
+MOBO?=NONDMI-586
 # for DMI-Capable Intel D201GLY2, D945GCLF, or Igoe Logic I3386g
-MOBO?=DMI-686
+#MOBO?=DMI-686
 
 # Do not mess with anything down here unless you know what you are doing!
 
@@ -25,7 +25,7 @@ MB:=$(strip $(MOBO))
 ifeq "$(MB)" "NONDMI-586"
 LINUX_ARCH:=i386
 PROCESSOR:=i586
-KERNEL_CONFIG_FILE:=i586-kernel-generic.config
+KERNEL_CONFIG_FILE:=via-kernel.config
 BUILDROOT_CONFIG_FILE:=i586-buildroot.config
 UCLIBC_CONFIG_FILE:=i586-uclibc.config
 else
@@ -172,7 +172,7 @@ ramdisk: ramdisk.img
 
 kernel:	buildstate/linux_kdev
 
-brcconfig: buildstate
+brcconfig: buildstate/ready
 	-rm prist_root_fs_$(PROCESSOR) 
 	-rm buildroot/binaries/limey/rootfs.$(PROCESSOR).ext2:
 	-rm buildstate/buildroot_configured buildstate/buildroot_made buildstate/buildroot_built
