@@ -7,9 +7,9 @@ DLSAVE?=../dlsave
 # Important! Change this to your raw cf device node
 CFDEVICE?=/dev/sdg
 # for Non-DMI Capable VIA Mini-itx M6000, ME6000, SP8000, or CN10000
-MOBO?=NONDMI-586
+#MOBO?=NONDMI-586
 # for DMI-Capable Intel D201GLY2, D945GCLF, or Igoe Logic I3386g
-#MOBO?=DMI-686
+MOBO?=DMI-686
 
 # Do not mess with anything down here unless you know what you are doing!
 
