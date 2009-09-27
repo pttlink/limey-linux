@@ -1,4 +1,4 @@
-#! /bin/sh                                                                      
+#! /bin/bash                                                                     
 TOPDOMAIN=allstarlink.org                                                       
 WGET=`which wget`
 
@@ -7,6 +7,7 @@ do
 	$WGET  -q -O /tmp/$i.out http://$i.$TOPDOMAIN/cgi-bin/nodes.pl
 	if [ $? -ne 0 ]
 	then
+		rm -f /tmp/$i.out
 		echo "$i.$TOPDOMAIN is down"
 	else
 		echo "$i.$TOPDOMAIN is up"
@@ -23,20 +24,20 @@ done
 
 if ! [ -z $1 ]
 then
-	cnt=1
-	while [ $cnt -lt $((sites + 1)) ]
+	files=$(echo "/tmp/nodes?.out")
+	for file in $files
 	do
-		echo "***** nodes$cnt *****"
-		grep $1 < /tmp/nodes$cnt.out
-		cnt=$((cnt+1))
+		node=$(echo $file | cut -d '/' -f3 | cut -d '.' -f1)
+		echo "***** $node *****"
+		grep $1 < $file
 	done
 else
-	cnt=1
-	while [ $cnt -lt $((sites + 1)) ]
+	files=$(echo "/tmp/nodes?.out")
+	for file in $files
 	do
-		echo "***** nodes$cnt *****"
-		head -n 3 /tmp/nodes$cnt.out
-		cnt=$((cnt+1))
+		node=$(echo $file | cut -d '/' -f3 | cut -d '.' -f1)
+		echo "***** $node  *****"
+		head -n 3 $file
 	done
 fi
 
