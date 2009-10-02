@@ -44,5 +44,12 @@ then
 	/etc/init.d/rc.thttpder &
 fi
 
+# run inadyn if the conf file exists in /etc
+
+if [ -e /etc/inadyn.conf ] && [ -x /sbin/inadyn ]
+then
+        /sbin/inadyn > /dev/null 2>&1 &
+fi
+
 # insert your custom config stuff here
 
