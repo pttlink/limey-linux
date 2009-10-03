@@ -2,9 +2,9 @@
 DMID=/usr/bin/dmidecode
 MANUF=$($DMID -s baseboard-manufacturer)
 MODEL=$($DMID -s baseboard-product-name)
-
 . /etc/sysinfo
-if [ "$PROCESSOR"=="i586" ]
+
+if [ "$PLATFORM" = "VIA-MINI-ITX" ]
 then
 	# Test for VIA motherboards
 	lspci | grep Rhine

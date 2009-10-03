@@ -6,10 +6,10 @@
 DLSAVE?=../dlsave
 # Important! Change this to your raw cf device node
 CFDEVICE?=/dev/sdg
-# for Non-DMI Capable VIA Mini-itx M6000, ME6000, SP8000, or CN10000
-#MOBO?=NONDMI-586
-# for DMI-Capable Intel D201GLY2, D945GCLF, or Igoe Logic I3386g
-MOBO?=DMI-686
+# for VIA Mini-itx M6000, ME6000, SP8000, or CN10000
+#PLATFORM?=VIA-MINI-ITX
+# for Intel Mini-itx D201GLY2, D945GCLF, or Igoe Logic I3386g
+PLATFORM?=INTEL-MINI-ITX
 
 # Do not mess with anything down here unless you know what you are doing!
 
@@ -20,29 +20,29 @@ BUILDDIR:=$(shell /bin/pwd)	# absolute path to build directory
 LLVERS:=$(strip $(VERSION))
 KVERS:=$(strip $(KERNELVERSION))
 TOPDIR:=$(strip $(BUILDDIR))
-MB:=$(strip $(MOBO))
+PF:=$(strip $(PLATFORM))
 
-ifeq "$(MB)" "NONDMI-586"
+ifeq "$(PF)" "VIA-MINI-ITX"
 LINUX_ARCH:=i386
 PROCESSOR:=i586
 KERNEL_CONFIG_FILE:=via-kernel.config
 BUILDROOT_CONFIG_FILE:=i586-buildroot.config
 UCLIBC_CONFIG_FILE:=i586-uclibc.config
 else
-ifeq "$(MB)" "DMI-686"
+ifeq "$(PF)" "INTEL-MINI-ITX"
 LINUX_ARCH:=i386
 PROCESSOR:=i686
 KERNEL_CONFIG_FILE:=i686-kernel-generic.config
 BUILDROOT_CONFIG_FILE:=i686-buildroot.config
 UCLIBC_CONFIG_FILE:=i686-uclibc.config
 else
-$(error "Unknown or unspecified motherboard: $(MOBO)")
+$(error "Unknown or unspecified platform: $(PLATFORM)")
 endif
 endif
 
 export PROCESSOR
 export KVERS
-export MOBO
+export PF
 export LLVERS
 
 LINUX_VERSION:=linux-$(KVERS)

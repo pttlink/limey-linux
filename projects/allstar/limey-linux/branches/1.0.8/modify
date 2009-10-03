@@ -26,6 +26,7 @@ echo "#" >> mnt/etc/sysinfo
 echo PROCESSOR=${PROCESSOR} >> mnt/etc/sysinfo
 echo KVERS=${KVERS} >> mnt/etc/sysinfo
 echo LLVERS=${LLVERS} >> mnt/etc/sysinfo
+echo PLATFORM=${PF} >> mnt/etc/sysinfo
 
 # delete /etc/init.d/S25syslog. It's loaded by inittab now
 
