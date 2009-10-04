@@ -38,7 +38,7 @@ then
 			;;
 		D945GCLF)
 			modprobe piix
-			modprobe 8139too
+			modprobe r8169
 			modprobe ehci_hcd
 			modprobe uhci_hcd
 			modprobe smsc47m1
