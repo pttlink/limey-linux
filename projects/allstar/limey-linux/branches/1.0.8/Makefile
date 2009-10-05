@@ -76,7 +76,6 @@ buildstate/ready:
 
 buildstate/syslinux_downloaded: buildstate/ready
 	-rm syslinux buildstate/syslinux_downloaded
-	-mkdir -p dl
 	if ! [ -f $(DLSAVE)/$(SYSLINUX_PACKAGE) ]; \
 	then \
 	(cd $(DLSAVE); wget $(SYSLINUX_SITE)); \
