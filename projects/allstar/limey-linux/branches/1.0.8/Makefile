@@ -100,10 +100,10 @@ buildstate/buildroot_made: buildstate/buildroot_configured
 	touch $@
 
 buildstate/buildroot_built: buildstate/buildroot_made
-	cp buildroot/binaries/limey/rootfs.$(PROCESSOR).ext2 prist_root_fs_$(PROCESSOR)
+	ln -s buildroot/binaries/limey/rootfs.$(PROCESSOR).ext2  prist_root_fs_$(PROCESSOR) 
 	-if [ -d $(DLSAVE) ]; \
 	then \
-	(cp -u buildroot/dl/* $(DLSAVE)); \
+	(cp -u buildroot/dl/* $(DLSAVE) 2>/dev/null ); \
 	fi   
 	touch $@
 
@@ -220,6 +220,7 @@ brremake:
 	-rm -rf ramdisk.img
 	-rm -rf prist_root_fs_$(PROCESSOR)
 	-rm root_fs_$(PROCESSOR)
+	-rm prist_root_fs_$(PROCESSOR)
 	-rm buildstate/buildroot_made
 	-rm buildstate/buildroot_built
 	
