@@ -154,7 +154,7 @@ buildstate/linux_kdev:	buildstate/linux_savemodules
 	(cd kdev/scripts/basic; $(LINUX_CROSS_COMPILE)gcc fixdep.c -o fixdep) # Recompile with target gcc
 	(cd kdev/scripts/mod; $(LINUX_CROSS_COMPILE)gcc modpost.c file2alias.c sumversion.c -o modpost) # Recompile with target gcc
 	(cd kdev; tar cfz ../kdev.tgz .)
-	-rm kernel.bzi
+	rm -f kernel.bzi
 	ln -s linux/arch/i386/boot/bzImage kernel.bzi
 	touch $@
 
@@ -172,13 +172,13 @@ ramdisk: ramdisk.img
 kernel:	buildstate/linux_kdev
 
 brcconfig: buildstate/ready
-	-rm prist_root_fs_$(PROCESSOR) 
-	-rm buildroot/binaries/limey/rootfs.$(PROCESSOR).ext2:
-	-rm buildstate/buildroot_configured buildstate/buildroot_made buildstate/buildroot_built
+	rm -f prist_root_fs_$(PROCESSOR) 
+	rm -f buildroot/binaries/limey/rootfs.$(PROCESSOR).ext2:
+	rm -f buildstate/buildroot_configured buildstate/buildroot_made buildstate/buildroot_built
 	make -C buildroot menuconfig
 
 lcconfig: buildstate buildstate/linux_patched
-	-rm buildstate/linux_built
+	rm -f buildstate/linux_built
 	make -C linux mrproper ARCH=$(LINUX_ARCH)
 	cp configs/$(KERNEL_CONFIG_FILE) linux/.config
 	make -C linux menuconfig
@@ -188,6 +188,7 @@ cf:	buildstate/syslinux_built ramdisk.img buildstate/linux_kdev
 	(export CFDEVICE=$(CFDEVICE); sudo -E ./mkcf)
 
 cfzero:
+	-sudo umount $(CFDEVICE)1
 	-(sudo dd bs=1024 count=125000 if=/dev/zero of=$(CFDEVICE))
 	make cf
 
@@ -196,54 +197,55 @@ cfimg:
 	tar cfz ../cfimg-$(LLVERS).tar.gz cfimg-$(LLVERS)
 	rm -f cfimg-$(LLVERS)
 clean:	
-	-rm buildstate/linux_built
-	-rm buildstate/syslinux_built
-	-rm buildstate/buildroot_made
-	-rm buildstate/buildroot_built
+	rm -f buildstate/linux_built
+	rm -f buildstate/syslinux_built
+	rm -f buildstate/buildroot_made
+	rm -f buildstate/buildroot_built
 	-make -C syslinux clean
 	-make -C linux mrproper
 	-make -C buildroot clean
-	-rm -rf buildroot/build_$(PROCESSOR)/*
+	rm -rf buildroot/build_$(PROCESSOR)/*
 	
 linuxdistclean:
-	-rm buildstate/linux_*
-	-rm kernel.bzi
-	-rm -rf ramdisk.img
-	-rm -rf linux* kdev
+	rm buildstate/linux_*
+	rm kernel.bzi
+	rm -rf ramdisk.img
+	rm -rf linux* kdev
 
 syslinuxdistclean:
-	-rm buildstate/syslinux_*
-	-rm -rf syslinux syslinux-3.*
+	rm -f buildstate/syslinux_*
+	rm -rf syslinux syslinux-3.*
 
 
 brremake:
-	-rm -rf ramdisk.img
-	-rm -rf prist_root_fs_$(PROCESSOR)
-	-rm root_fs_$(PROCESSOR)
-	-rm prist_root_fs_$(PROCESSOR)
-	-rm buildstate/buildroot_made
-	-rm buildstate/buildroot_built
+	rm -rf ramdisk.img
+	rm -rf prist_root_fs_$(PROCESSOR)
+	rm -f root_fs_$(PROCESSOR)
+	rm -f prist_root_fs_$(PROCESSOR)
+	rm -f buildstate/buildroot_made
+	rm -f buildstate/buildroot_built
+	cp configs/device_table.txt buildroot/target/generic 
 	
 buildrootdistclean:
 	-make -C buildroot distclean
-	-rm -rf buildroot/build_$(PROCESSOR)
-	-rm -rf buildroot/toolchain_build_$(PROCESSOR)
-	-rm -rf buildroot/dl/*
-	-rm -f buildroot/rootfs.$(PROCESSOR).ext2
-	-rm buildstate/buildroot*
+	rm -rf buildroot/build_$(PROCESSOR)
+	rm -rf buildroot/toolchain_build_$(PROCESSOR)
+	rm -rf buildroot/dl/*
+	rm -f buildroot/rootfs.$(PROCESSOR).ext2
+	rm -f buildstate/buildroot*
 
 distclean:	linuxdistclean syslinuxdistclean buildrootdistclean
-	-rm -rf buildstate
-	-rm prist_root_fs_$(PROCESSOR)
-	-rm -f root_fs_$(PROCESSOR)
-	-rm -rf dl
-	-rm -rf kdev
-	-rm -rf kdev.tgz
-	-rm -rf syscfg.tgz
-	-rm -rf *.img
-	-rm -rf buildroot/.c*
-	-rm buildroot/uClibc.config
-	-rm buildroot/busybox.config
+	rm -rf buildstate
+	rm -f prist_root_fs_$(PROCESSOR)
+	rm -f root_fs_$(PROCESSOR)
+	rm -rf dl
+	rm -rf kdev
+	rm -rf kdev.tgz
+	rm -rf syscfg.tgz
+	rm -rf *.img
+	rm -rf buildroot/.c*
+	rm buildroot/uClibc.config
+	rm buildroot/busybox.config
 
 
 archive:	distclean
