@@ -1,6 +1,0 @@
-config BR2_PACKAGE_NOIP
-	bool "noip"
-	default n
-	help
-          A DDNS client for noip.com
-
