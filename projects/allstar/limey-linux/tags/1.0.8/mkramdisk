@@ -1,0 +1,9 @@
+#!/bin/bash
+export PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin
+export KVERS
+export PROCESSOR
+export LLVERS
+export MOBO
+./resizeroot 256000
+./modify
+./squashrt

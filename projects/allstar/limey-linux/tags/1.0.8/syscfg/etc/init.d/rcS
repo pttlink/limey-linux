@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# This script is responsible for starting the daemons responsible for services
+# we host, then running the rc.local script
+
+# Start all init scripts in /etc/init.d
+# executing them in numerical order.
+#
+for i in /etc/init.d/S??* ;do
+
+     # Ignore dangling symlinks (if any).
+     [ ! -f "$i" ] && continue
+
+     case "$i" in
+	*.sh)
+	    # Source shell script for speed.
+	    (
+		trap - INT QUIT TSTP
+		set start
+		. $i
+	    )
+	    ;;
+	*)
+	    # No sh extension, so fork subprocess.
+	    $i start
+	    ;;
+    esac
+done
+if [ -e /etc/init.d/rc.local ]
+then
+	/etc/init.d/rc.local
+fi

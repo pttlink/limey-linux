@@ -1,0 +1,7 @@
+config BR2_PACKAGE_DMIDECODE
+	bool "dmidecode"
+	help
+	  DMI Decoder
+
+	  http://www.nongnu.org/dmidecode/
+
