@@ -103,4 +103,4 @@ ClientAliveInterval 15
 ClientAliveCountMax 4
 
 # override default of no subsystems
-Subsystem	sftp	/usr/sbin/sftp-server
+Subsystem	sftp	/usr/lib/sftp-server
