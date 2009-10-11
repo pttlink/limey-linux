@@ -207,8 +207,8 @@ clean:
 	rm -rf buildroot/build_$(PROCESSOR)/*
 	
 linuxdistclean:
-	rm buildstate/linux_*
-	rm kernel.bzi
+	rm -f buildstate/linux_*
+	rm -f kernel.bzi
 	rm -rf ramdisk.img
 	rm -rf linux* kdev
 
@@ -244,8 +244,8 @@ distclean:	linuxdistclean syslinuxdistclean buildrootdistclean
 	rm -rf syscfg.tgz
 	rm -rf *.img
 	rm -rf buildroot/.c*
-	rm buildroot/uClibc.config
-	rm buildroot/busybox.config
+	rm -f buildroot/uClibc.config
+	rm -f buildroot/busybox.config
 
 
 archive:	distclean
