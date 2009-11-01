@@ -94,10 +94,18 @@
 /dev/audio1	c	666	0	29	14	20	-	-	-
 /dev/audio2	c	666	0	29	14	36	-	-	-
 /dev/audio3	c	666	0	29	14	52	-	-	-
+/dev/audio4     c       666     0       29      14      68      -       -       -
+/dev/audio5     c       666     0       29      14      84      -       -       -
+/dev/audio6     c       666     0       29      14      100     -       -       -
+/dev/audio7     c       666     0       29      14      116     -       -       -
 /dev/dsp	c	666	0	29	14	3	-	-	-
 /dev/dsp1	c	666	0	29	14	19	-	-	-
-/dev/dsp2	c	666	0	29	14	39	-	-	-
-/dev/dsp3	c	666	0	29	14	55	-	-	-
+/dev/dsp2	c	666	0	29	14	35	-	-	-
+/dev/dsp3	c	666	0	29	14	51	-	-	-
+/dev/dsp4	c	666	0	29	14	67	-	-	-
+/dev/dsp5	c	666	0	29	14	83	-	-	-
+/dev/dsp6	c	666	0	29	14	99	-	-	-
+/dev/dsp7	c	666	0	29	14	115	-	-	-
 /dev/sndstat	c	666	0	29	14	6	-	-	-
 /dev/snd	d	666	0	0	-	-	-	-	-
 /dev/snd/timer	c	666	0	0	116	33	-	-	-
@@ -113,6 +121,19 @@
 /dev/snd/controlC3      c       666     0       0       116     96      -       -       -
 /dev/snd/pcmC3D0c       c       666     0       0       116     120     -       -       -
 /dev/snd/pcmC3D0p       c       666     0       0       116     112     -       -       -
+/dev/snd/controlC4      c       666     0       0       116     128     -       -       -
+/dev/snd/pcmC4D0c       c       666     0       0       116     152     -       -       -
+/dev/snd/pcmC4D0p       c       666     0       0       116     144     -       -       -
+/dev/snd/controlC5      c       666     0       0       116     160     -       -       -
+/dev/snd/pcmC5D0c       c       666     0       0       116     184     -       -       -
+/dev/snd/pcmC5D0p       c       666     0       0       116     176     -       -       -
+/dev/snd/controlC6      c       666     0       0       116     192     -       -       -
+/dev/snd/pcmC6D0c       c       666     0       0       116     216     -       -       -
+/dev/snd/pcmC6D0p       c       666     0       0       116     208     -       -       -
+/dev/snd/controlC7      c       666     0       0       116     224     -       -       -
+/dev/snd/pcmC7D0c       c       666     0       0       116     248     -       -       -
+/dev/snd/pcmC7D0p       c       666     0       0       116     240     -       -       -
+
 
 # User-mode Linux stuff
 #/dev/ubda	b	640	0	0	98	0	0	0	-
