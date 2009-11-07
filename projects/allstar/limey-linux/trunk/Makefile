@@ -63,7 +63,7 @@ savemods:	buildstate/linux_savemodules
 buildstate/ready:	
 	-mkdir -p buildstate
 	-mkdir -p buildroot/dl
-	if [ -d $(DLSAVE) ]; \
+	-if [ -d $(DLSAVE) ]; \
 	then \
 	(cp -l $(DLSAVE)/* buildroot/dl); \
 	fi   
