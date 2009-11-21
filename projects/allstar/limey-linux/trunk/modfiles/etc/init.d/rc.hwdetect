@@ -6,6 +6,19 @@ MANUF=$($DMID -s baseboard-manufacturer | $SED 's/^[ \t]*//;s/[ \t]*$//')
 MODEL=$($DMID -s baseboard-product-name | $SED 's/^[ \t]*//;s/[ \t]*$//')
 . /etc/sysinfo
 
+# D945GC series motherboards
+
+groupd945gc ()
+{
+	modprobe piix
+	modprobe r8169
+	modprobe ehci_hcd
+	modprobe uhci_hcd
+	modprobe smsc47m1
+	modprobe smsc47m192
+}
+
+
 if [ "$PLATFORM" = "VIA-MINI-ITX" ]
 then
 	# Test for VIA motherboards
@@ -38,13 +51,12 @@ then
 			modprobe w83627ehf
 			exit 0
 			;;
+		D945GCLF2D)
+			groupd945gc
+			exit 0
+			;;
 		D945GCLF)
-			modprobe piix
-			modprobe r8169
-			modprobe ehci_hcd
-			modprobe uhci_hcd
-			modprobe smsc47m1
-			modprobe smsc47m192
+			groupd945gc
 			exit 0
 			;;
 		D945GSEJT)
