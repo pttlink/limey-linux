@@ -11,12 +11,24 @@ export PATH
 if [ -e /etc/init.d/rc.hwdetect ]
 then
 	/etc/init.d/rc.hwdetect
-	sleep 2;
+	sleep 2
 fi
 
 cd /
 
-mount -r -t msdos /dev/hda1 /mnt/cf || exit 1
+mount -r -t msdos /dev/hda1 /mnt/cf
+if [ $? -ne 0 ]
+then
+	sleep 10
+	mount -r -t msdos /dev/sda1 /mnt/cf
+	if [ $? -ne 0 ]
+	then
+		exit 1
+	fi
+	BOOTEDFROM=/dev/sda1
+else
+	BOOTEDFROM=/dev/hda1
+fi
 
 if [ -e /mnt/cf/syscfg.tgz ]
 then
@@ -26,8 +38,12 @@ fi
 if [ -e /etc/init.d/rc.syscfg ]
 then
 	/etc/init.d/rc.syscfg
+	sed </etc/fstab '/sda1/d' | sed '/hda1/d' > /etc/fstab.new
+	echo "$BOOTEDFROM       /mnt/cf        msdos    rw,noauto          0      0" >> /etc/fstab.new
+	mv -f /etc/fstab.new /etc/fstab
+	echo "BOOTEDFROM=$BOOTEDFROM" > /var/bootedfrom
 fi
-sleep 1 
+sleep 1
 umount /mnt/cf
 mount -a
 exit 0
