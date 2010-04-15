@@ -7,8 +7,14 @@
 # save the configuration, and reboot.
 # 
 #
+if [ -e /var/bootedfrom ]
+then
+	. /var/bootedfrom
+else
+	BOOTEDFROM=/dev/hda1
+fi
 
-mount -t msdos /dev/hda1 /mnt/cf
+mount -t msdos $BOOTEDFROM /mnt/cf
 if [ -e /mnt/cf/firsttim ]
 then
 	echo ""
