@@ -1,6 +1,12 @@
 #!/bin/bash
+if [ -e /var/bootedfrom ]
+then
+	. /var/bootedfrom
+else
+	BOOTEDFROM=/dev/hda1
+fi	
 umount /mnt/cf >/dev/null 2>/dev/null
-mount -t msdos /dev/hda1 /mnt/cf || exit 1
+mount -t msdos $BOOTEDFROM /mnt/cf || exit 1
 cd /
 chown -R root:root etc root usr/local
 chown root:root home
