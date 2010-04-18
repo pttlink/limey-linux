@@ -11,24 +11,41 @@ export PATH
 if [ -e /etc/init.d/rc.hwdetect ]
 then
 	/etc/init.d/rc.hwdetect
-	sleep 2
 fi
 
 cd /
 
-mount -r -t msdos /dev/hda1 /mnt/cf
-if [ $? -ne 0 ]
-then
-	sleep 10
-	mount -r -t msdos /dev/sda1 /mnt/cf
-	if [ $? -ne 0 ]
+sleep 2
+
+TRIES=0
+echo -n "Identifying boot disk device." >/var/log/bootinfo.log
+while [ 1 ]
+do 
+	mount -r -t msdos /dev/hda1 /mnt/cf
+	if [ $? -eq 0 ]
 	then
-		exit 1
+		echo
+		BOOTEDFROM=/dev/hda1
+		break
 	fi
-	BOOTEDFROM=/dev/sda1
-else
-	BOOTEDFROM=/dev/hda1
-fi
+	mount -r -t msdos /dev/sda1 /mnt/cf
+	if [ $? -eq 0 ]
+	then
+		echo 
+		BOOTEDFROM=/dev/sda1
+		break
+	fi
+	sleep 2
+	echo -n "." >> /var/log/bootinfo.log
+ 	TRIES=$(($TRIES+1))
+	if [ $TRIES  -gt 10 ]
+	then
+		echo
+		echo "Time out on disk device coming ready!" >> /var/log/bootinfo.org
+		return
+	fi
+done
+echo "Booted from: $BOOTEDFROM" >> /var/log/bootinfo.log
 
 if [ -e /mnt/cf/syscfg.tgz ]
 then
