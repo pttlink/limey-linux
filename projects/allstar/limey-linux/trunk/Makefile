@@ -5,11 +5,11 @@
 # Place to store our source tarballs so that they don't have to be downloaded from the Internet between make distcleans
 DLSAVE?=../dlsave
 # Important! Change this to your raw cf device node
-CFDEVICE?=/dev/sdg
+CFDEVICE?=/dev/sdf
 # for VIA Mini-itx M6000, ME6000, SP8000, or CN10000
-#PLATFORM?=VIA-MINI-ITX
+PLATFORM?=VIA-MINI-ITX
 # for Intel Mini-itx D201GLY2, D945GCLF, D945GSEJT or Igoe Logic I3386g
-PLATFORM?=INTEL-MINI-ITX
+#PLATFORM?=INTEL-MINI-ITX
 
 # Do not mess with anything down here unless you know what you are doing!
 

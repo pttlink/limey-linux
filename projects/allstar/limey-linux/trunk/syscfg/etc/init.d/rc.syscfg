@@ -40,6 +40,10 @@ then
 	then
 		modprobe ztdummy || exit 1
 	fi
+	if [ -e /etc/init.d/simpleusb ]
+	then
+		modprobe ztdummy || exit 1
+	fi
 	/sbin/ztcfg || exit 1
 	touch /var/run/doasterisk
 	/etc/init.d/rc.asterisker &

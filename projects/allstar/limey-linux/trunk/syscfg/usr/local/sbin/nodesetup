@@ -72,6 +72,24 @@ echo "*************************************"
 echo "*     Simple Node Setup Script      *"
 echo "*************************************"
 echo
+echo "The system configuration type is the type of hardware and software"
+echo "running on your system (pciradio, usbradio, simpleusb)"
+echo 
+echo "WARNING: Modifying the configuration type on an already set-up system"
+echo "will over-write all existing configuration files!!!"
+echo "If this is an initial installation, you have nothing to worry about."
+echo
+echo "Please make sure you understand these consequences if you"
+echo "choose to change the system configuration type."
+echo
+
+promptyn "Would you like to modify your system configuration type now"
+if [ "$ANSWER" = "Y" ]
+then
+	/usr/local/sbin/modconfig
+fi
+
+echo
 echo "Doing sanity checks on rpt.conf, extensions.conf, iax.conf, and savenode.conf..."
 
 if [ -e $CONFIGS/extensions.conf ]
