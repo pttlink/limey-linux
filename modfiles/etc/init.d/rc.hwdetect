@@ -55,6 +55,10 @@ then
 			groupd945gc
 			exit 0
 			;;
+		D945GCLF2)
+			groupd945gc
+			exit 0
+			;;
 		D945GCLF)
 			groupd945gc
 			exit 0
