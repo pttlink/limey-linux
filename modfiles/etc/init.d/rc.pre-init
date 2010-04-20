@@ -1,0 +1,67 @@
+#!/bin/bash
+#
+# Pre initialization file
+#
+# 8/31/04 S.A. Rodgers
+#
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/sbin
+export PATH
+
+if [ -e /etc/init.d/rc.hwdetect ]
+then
+	/etc/init.d/rc.hwdetect
+fi
+
+cd /
+
+sleep 2
+
+TRIES=0
+echo -n "Identifying boot disk device." >/var/log/bootinfo.log
+while [ 1 ]
+do 
+	mount -r -t msdos /dev/hda1 /mnt/cf
+	if [ $? -eq 0 ]
+	then
+		echo
+		BOOTEDFROM=/dev/hda1
+		break
+	fi
+	mount -r -t msdos /dev/sda1 /mnt/cf
+	if [ $? -eq 0 ]
+	then
+		echo 
+		BOOTEDFROM=/dev/sda1
+		break
+	fi
+	sleep 2
+	echo -n "." >> /var/log/bootinfo.log
+ 	TRIES=$(($TRIES+1))
+	if [ $TRIES  -gt 10 ]
+	then
+		echo
+		echo "Time out on disk device coming ready!" >> /var/log/bootinfo.org
+		return
+	fi
+done
+echo "Booted from: $BOOTEDFROM" >> /var/log/bootinfo.log
+
+if [ -e /mnt/cf/syscfg.tgz ]
+then
+	tar xvzf /mnt/cf/syscfg.tgz
+fi
+
+if [ -e /etc/init.d/rc.syscfg ]
+then
+	/etc/init.d/rc.syscfg
+	sed </etc/fstab '/sda1/d' | sed '/hda1/d' > /etc/fstab.new
+	echo "$BOOTEDFROM       /mnt/cf        msdos    rw,noauto          0      0" >> /etc/fstab.new
+	mv -f /etc/fstab.new /etc/fstab
+	echo "BOOTEDFROM=$BOOTEDFROM" > /var/bootedfrom
+fi
+sleep 1
+umount /mnt/cf
+mount -a
+exit 0
+	
