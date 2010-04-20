@@ -1,0 +1,6 @@
+config BR2_PACKAGE_INADYN
+	bool "inadyn"
+	default n
+	help
+          A multi protocol capable DDNS client written in C
+

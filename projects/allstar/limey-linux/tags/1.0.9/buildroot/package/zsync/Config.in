@@ -1,0 +1,7 @@
+config BR2_PACKAGE_ZSYNC
+	bool "zsync"
+	help
+	  Zsync partial/differential file distribution
+
+	  http://zsync.moria.org.uk
+
