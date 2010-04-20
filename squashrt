@@ -1,0 +1,5 @@
+#/bin/bash
+cp root_fs_${PROCESSOR} ramdisk
+gzip -9 ramdisk
+mv ramdisk.gz ramdisk.img
+
