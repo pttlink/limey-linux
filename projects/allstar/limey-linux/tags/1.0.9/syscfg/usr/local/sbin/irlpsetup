@@ -1,0 +1,6 @@
+#! /bin/sh
+cd /root
+rm -rf irlp-limey*
+wget http://limeylinux.org/downloads/irlp-limey-install
+chmod +x irlp-limey-install
+./irlp-limey-install

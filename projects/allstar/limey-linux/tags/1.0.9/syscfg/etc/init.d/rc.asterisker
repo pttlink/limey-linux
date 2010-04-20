@@ -1,0 +1,19 @@
+#!/bin/bash
+#
+# The purpose of this script is to restart asterisk if it abnormally terminates
+#
+while [ ! -f /var/run/network-up ]
+do
+	sleep 2
+done
+sleep 5
+echo "Asterisk Starting" > /dev/console
+while [ -e /var/run/doasterisk ]
+do
+	/usr/sbin/asterisk -fq  >/dev/null 2>/dev/null # shut up and do your work
+	sleep 4
+#	echo asterisk not responding!
+	sleep 1
+done
+exit 1
+
