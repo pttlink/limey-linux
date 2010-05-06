@@ -51,5 +51,12 @@ then
         /sbin/inadyn > /dev/null 2>&1 &
 fi
 
+# Turn off screen blanking
+
+for(( i = 1; i < 3; i++))
+do
+  setterm -blank 0 >/dev/tty$i
+done
+
 # insert your custom config stuff here
 
