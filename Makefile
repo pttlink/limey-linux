@@ -7,13 +7,13 @@ DLSAVE?=../dlsave
 # Important! Change this to your raw cf device node
 CFDEVICE?=/dev/sdf
 # for VIA Mini-itx M6000, ME6000, SP8000, or CN10000
-PLATFORM?=VIA-MINI-ITX
+#PLATFORM?=VIA-MINI-ITX
 # for Intel Mini-itx D201GLY2, D945GCLF, D945GSEJT or Igoe Logic I3386g
-#PLATFORM?=INTEL-MINI-ITX
+PLATFORM?=INTEL-MINI-ITX
 
 # Do not mess with anything down here unless you know what you are doing!
 
-VERSION:=1.0.9			# Limey linux version
+VERSION:=1.0.10			# Limey linux version
 KERNELVERSION:=2.6.30.5		# Linux Kernel version
 BUILDDIR:=$(shell /bin/pwd)	# absolute path to build directory
 
