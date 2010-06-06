@@ -2,5 +2,5 @@
 KVERS=`uname -r`
 (cd /; tar cvzf /root/astbin.tgz /lib/modules/${KVERS}/misc \
 /usr/lib/libtonezone* /usr/lib/libpri* /usr/lib/asterisk \
-/usr/sbin/asterisk /sbin/ztcfg /var/lib/asterisk /dev/zap )
+/usr/sbin/asterisk /usr/sbin/radio-tune-menu /sbin/ztcfg /var/lib/asterisk /dev/zap )
 
