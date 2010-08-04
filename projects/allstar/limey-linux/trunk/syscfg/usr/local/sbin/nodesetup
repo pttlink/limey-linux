@@ -89,6 +89,64 @@ then
 	/usr/local/sbin/modconfig
 fi
 
+promptny "Would you like your config files be provided by the Allstar Portal server"
+if [ "$ANSWER" = "Y" ]
+then
+	if [ ! -f /etc/init.d/usbradio ]
+	then
+		echo "Your system configuration type must be 'usbradio'. It currently"
+		echo "is not. Sorry."
+		exit 1
+	fi
+	echo
+	echo "This requires you to have already applied for and received an approved"
+	echo "Allstar Link Portal user ID, set it up to be a system operator, created"
+	echo "an entry for, and properly configured information about this Server, and"
+	echo "requested, and received an approved Node entry for each of the Nodes on"
+	echo "this Server, and properly configured the inforation for each of the Nodes."
+	echo 
+	promptyn "Have you estblished and entered the appropriate information on that server"
+	if [ "$ANSWER" = "Y" ]
+	then
+		if [ -x /usr/bin/curl ] && [ -e /etc/ssl/certs/ca-certificates.crt ]
+		then
+			TMPF=/tmp/pcf.sh
+			/bin/rm $TMPF > /dev/null 2>&1
+			curl -L -s https://allstarlink.org/config/portalconfig.sh -o $TMPF
+			if [ $? -ne 0 ]
+			then
+				echo "curl was not able to download necessary script file, sorry."
+				exit 1
+			fi
+			sh $TMPF
+			if [ $? -ne 0 ]
+			then
+				rm $TMPF
+				echo "Allstar Link Portal Config Download Failed.. exiting"
+				exit 1
+			fi
+			rm $TMPF
+			echo 
+                        echo "Congradulations! From now on, you will be able to initiate an automatic"
+                        echo "download of any Node or Server configuration changes from the Allstar"
+                        echo "Portal (just from the Web, without even having to have any sort of terminal"
+                        echo "session active to this system)."
+                        echo
+                        echo "You must now manually re-boot the system for these changes to take place."
+                        echo
+                        echo "Thank you for using the Allstar Link Network System!"
+                        echo
+			exit 0
+		else
+			echo "curl and its associated cert file(s) can not be found, sorry!"
+			exit 1
+		fi
+	else
+		echo "Nothing changed!"
+		exit 0
+	fi
+fi
+
 echo
 echo "Doing sanity checks on rpt.conf, extensions.conf, iax.conf, and savenode.conf..."
 
@@ -112,7 +170,7 @@ then
 	REG=$(echo "$REG1" | gawk -F'@' '{print $1}')
 	REGNODE=$(echo "$REG" | gawk -F':' '{print $1}')
 	REGPSWD=$(echo "$REG" | gawk -F':' '{print $2}')
-	if [ $REGNODE != A$NODE ]
+	if [ $REGNODE != $NODE ]
 	then
 		die "Node numbers in rpt.conf and iax.conf are different!"
 	fi
