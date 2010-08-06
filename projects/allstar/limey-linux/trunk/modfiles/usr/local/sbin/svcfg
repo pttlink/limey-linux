@@ -11,7 +11,7 @@ cd /
 chown -R root:root etc root usr/local
 chown root:root home
 mkdir -p /var/lib/asterisk/keys
-tar cvzf mnt/cf/syscfg.tgz etc home root usr/local usr/src/getsrc var/www/html var/spool/cron var/lib/asterisk/keys 
+tar cvzf mnt/cf/syscfg.tgz etc home root usr/local usr/src/astsrc/getsrc var/www/html var/spool/cron var/lib/asterisk/keys 
 sync
 umount /mnt/cf
 if [ -x /usr/local/bin/savenode ]
