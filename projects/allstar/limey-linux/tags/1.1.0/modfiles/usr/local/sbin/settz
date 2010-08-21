@@ -1,0 +1,45 @@
+#/!bin/bash
+
+#
+# Timezone setup script
+#
+
+function promptyn
+{
+	echo -n "$1 (Y/N)? "
+	read ANSWER
+	if [ $ANSWER = Y ] || [ $ANSWER = y ]
+	then
+		ANSWER=Y
+	else
+		ANSWER=N
+	fi
+}
+		
+
+TZPATH=/etc/TZ
+
+echo ""
+echo "***** Time zone setup *****"
+echo ""
+echo "The current time zone setting is: $(cat $TZPATH)"
+echo ""
+promptyn "Do you want to change this"
+
+if [ $ANSWER = N ]
+then
+	exit 0
+fi
+
+echo -n "Enter the new alphanumeric time zone code: "
+read TIMEZONE
+
+if [ -z $TIMEZONE ]
+then
+	echo "Timezone not changed"
+	exit 0
+fi
+
+echo "$TIMEZONE" > $TZPATH
+exit 1
+

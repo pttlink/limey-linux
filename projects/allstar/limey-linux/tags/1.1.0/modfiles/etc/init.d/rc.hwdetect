@@ -1,0 +1,92 @@
+#!/bin/bash
+DMID=/usr/bin/dmidecode
+SED=/bin/sed
+/sbin/depmod -a
+MANUF=$($DMID -s baseboard-manufacturer | $SED 's/^[ \t]*//;s/[ \t]*$//')
+MODEL=$($DMID -s baseboard-product-name | $SED 's/^[ \t]*//;s/[ \t]*$//')
+. /etc/sysinfo
+
+# D945GC series motherboards
+
+groupd945gc ()
+{
+	modprobe piix
+	modprobe r8169
+	modprobe ehci_hcd
+	modprobe uhci_hcd
+	modprobe smsc47m1
+	modprobe smsc47m192
+}
+
+
+if [ "$PLATFORM" = "VIA-MINI-ITX" ]
+then
+	# Test for VIA motherboards
+	lspci | grep Rhine
+	if [ $? -ne 0 ]
+	then
+		exit 1
+	fi
+	modprobe via-rhine
+	modprobe via82cxxx
+	modprobe ehci-hcd
+	modprobe uhci-hcd
+	modprobe vt1211
+	modprobe vt8231
+	exit 0
+fi
+
+# 686 motherboards from this point forward 
+		
+
+if [ "$MANUF" = "Intel Corporation" ]
+then
+	case "$MODEL" in
+		D201GLY)
+			modprobe sis5513
+			modprobe sis900
+			modprobe ehci_hcd
+			modprobe ohci_hcd
+			modprobe coretemp
+			modprobe w83627ehf
+			exit 0
+			;;
+		D945GCLF2D)
+			groupd945gc
+			exit 0
+			;;
+		D945GCLF2)
+			groupd945gc
+			exit 0
+			;;
+		D945GCLF)
+			groupd945gc
+			exit 0
+			;;
+		D945GSEJT)
+			modprobe piix
+			modprobe r8169
+			modprobe ehci_hcd
+			modprobe uhci_hcd
+			exit 0;
+			;;
+
+		*)
+			echo "Unknown MOBO: $MANUF $MODEL"
+			exit 1
+	esac
+fi
+
+# i3386g has no manufacturer!
+
+if [ "$MODEL" = "i855-ICH4" ]
+then
+	modprobe piix
+	modprobe 8139too
+	modprobe r8169
+	modprobe ehci_hcd
+	modprobe uhci_hcd
+	modprobe w83627ehf 
+	exit 0
+fi
+
