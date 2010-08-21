@@ -1,5 +1,0 @@
-# Cron Table
-#
-#
-04 03 * * * /etc/init.d/rc.daily		# Daily service script
-
