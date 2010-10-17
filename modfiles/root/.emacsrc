@@ -1,2 +1,0 @@
-bind-to-key search-forward              ^Z
-bind-to-key save-file                   ^X^Z   
