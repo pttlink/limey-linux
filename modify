@@ -33,7 +33,7 @@ echo PLATFORM=${PF} >> mnt/etc/sysinfo
 rm -f mnt/etc/init.d/S25syslog
 
 # Copy curl-config to /usr/bin and make it executable. Ugly hack because buildroot AUTOTARGETS post install hook broken 
-cat configs/curl-config  | sed "s/i686/$PROCESSOR/g" > mnt/usr/bin/curl-config
+cp buildroot/build_${PROCESSOR}/staging_dir/usr/bin/curl-config  mnt/usr/bin/curl-config
 chmod 755 mnt/usr/bin/curl-config
 
 # Get rid of those stupid links to /tmp and make real dirs, after all,
