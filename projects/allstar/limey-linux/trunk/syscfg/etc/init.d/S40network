@@ -8,6 +8,7 @@ export PATH
 
 start() {
  	echo "Starting network..."
+	(sleep 3; /usr/bin/eject /dev/scd0 > /dev/null 2>&1) &
 	/sbin/ifup -a
 }	
 stop() {
