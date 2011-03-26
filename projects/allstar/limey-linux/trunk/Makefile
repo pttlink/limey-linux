@@ -13,7 +13,7 @@ PLATFORM?=INTEL-MINI-ITX
 
 # Do not mess with anything down here unless you know what you are doing!
 
-VERSION:=1.1.3			# Limey linux version
+VERSION:=1.1.4			# Limey linux version
 KERNELVERSION:=2.6.30.5		# Linux Kernel version
 BUILDDIR:=$(shell /bin/pwd)	# absolute path to build directory
 
@@ -120,6 +120,7 @@ buildstate/linux_unpacked:	buildstate/linux_downloaded
 	ln -s $(LINUX_VERSION) linux
 
 buildstate/linux_patched: buildstate/linux_unpacked
+	patch linux/drivers/usb/serial/option.c < kernel-patches/option.c.patch
 	touch $@	
 
 buildstate/linux_configured:    buildstate/linux_patched
