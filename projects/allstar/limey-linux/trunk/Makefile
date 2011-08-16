@@ -13,7 +13,7 @@ PLATFORM?=INTEL-MINI-ITX
 
 # Do not mess with anything down here unless you know what you are doing!
 
-VERSION:=1.1.4			# Limey linux version
+VERSION:=1.1.5			# Limey linux version
 KERNELVERSION:=2.6.30.5		# Linux Kernel version
 BUILDDIR:=$(shell /bin/pwd)	# absolute path to build directory
 
